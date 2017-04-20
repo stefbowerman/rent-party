@@ -1,0 +1,260 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Minimal",
+    "theme_author": "Shopify",
+    "theme_version": "3.2.0",
+    "theme_documentation_url": "https:\/\/docs.shopify.com\/manual\/more\/official-shopify-themes\/minimal",
+    "theme_support_url": "https:\/\/support.shopify.com\/"
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_wide_layout",
+        "label": "Enable wide layout"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Background"
+      },
+      {
+        "type": "checkbox",
+        "id": "theme_bg_image",
+        "label": "Use theme background"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_custom",
+        "label": "Custom image"
+      },
+      {
+        "type": "radio",
+        "id": "bg_image_display",
+        "label": "Image display",
+        "options": [
+          {
+            "value": "tile",
+            "label": "Tile"
+          },
+          {
+            "value": "stretch",
+            "label": "Stretch"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "color_topbar_bg",
+        "label": "Top bar background",
+        "default": "#204a80"
+      },
+      {
+        "type": "color",
+        "id": "color_body_bg",
+        "label": "Body background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_bg",
+        "label": "Footer background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_borders",
+        "label": "Lines and borders",
+        "default": "#e5e5e5"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary buttons and links",
+        "default": "#204a80"
+      },
+      {
+        "type": "color",
+        "id": "color_button_primary_text",
+        "label": "Primary button text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary buttons",
+        "default": "#dcdcdc"
+      },
+      {
+        "type": "color",
+        "id": "color_button_secondary_text",
+        "label": "Secondary button text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color_topbar_text",
+        "label": "Top bar",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_header_text",
+        "label": "Main menu",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Body",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_text",
+        "label": "Footer",
+        "default": "#636363"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_social_link",
+        "label": "Social media and payment icons",
+        "default": "#bbbbbb"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https:\/\/www.facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https:\/\/www.pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_google_plus_link",
+        "label": "Google Plus",
+        "info": "https:\/\/plus.google.com\/+shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https:\/\/snapchat.com\/add\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "http:\/\/shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/user\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_fancy_link",
+        "label": "Fancy",
+        "info": "http:\/\/fancy.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_rss_link",
+        "label": "RSS",
+        "info": "http:\/\/store.myshopify.com\/blogs\/blogname.atom"
+      },
+      {
+        "type": "header",
+        "content": "Sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest"
+      },
+      {
+        "type": "select",
+        "id": "social_sharing_style",
+        "label": "Button style",
+        "options": [
+          {
+            "value": "normal",
+            "label": "Fully branded"
+          },
+          {
+            "value": "is-clean",
+            "label": "Logo only"
+          }
+        ]
+      }
+    ]
+  }
+]
