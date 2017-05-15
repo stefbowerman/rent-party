@@ -1,0 +1,52 @@
+/*================ Module | Breadcrumbs and Tag Sorting ================*/
+.breadcrumb,
+.tags {
+  font-family: $accentFontStack;
+  color: $colorTextBody;
+
+  a {
+    color: $colorTextBody;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $colorPrimary;
+    }
+  }
+}
+
+.breadcrumb {
+  margin-bottom: $gutter / 2.5;
+  color: $colorTextBody;
+  font-size: em($baseFontSize - 1px);
+
+  a,
+  span {
+    display: inline;
+    padding-right: 1px;
+    margin-right: 1px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.breadcrumb__sep {
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.tags {
+  color: $colorPrimary;
+
+  a {
+    display: inline-block;
+    padding: 5px 7px 5px 0;
+    margin-right: 12px;
+  }
+}
+
+.tag--active a {
+  color: $colorPrimary;
+}

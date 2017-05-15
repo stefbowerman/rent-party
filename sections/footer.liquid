@@ -1,165 +1,73 @@
-<footer class="site-footer small--text-center" role="contentinfo">
+{% capture footer_menu_length %}{{ linklists['footer'].links | size }}{% endcapture %}
+{% assign footer_menu_length = footer_menu_length | plus: 0 %}
 
-<div class="wrapper">
+<footer class="site-footer" role="contentinfo" data-section-id="{{ section.id }}" data-section-type="footer-section">
+  
+  <div class="wrapper">
 
-  <div class="grid-uniform">
+    <div class="grid-uniform">
 
-    {% if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_google_plus_link != blank or settings.social_instagram_link != blank or settings.social_snapchat_link != blank or settings.social_tumblr_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_fancy_link != blank or settings.social_rss_link != blank %}
-      {% assign show_social_icons = true %}
-    {% else %}
-      {% assign show_social_icons = false %}
-    {% endif %}
+      <div class="grid__item post-large--one-third site-footer__links">
+        {% include 'breadcrumb' %}
+      </div>
 
-    {% case section.blocks.size %}
-      {% when 0 %}
-      {% when 1 %}
-        {% assign column_width = 'text-center' %}
-      {% when 2 %}
-        {% assign column_width = 'post-large--one-half medium--one-half' %}
-      {% when 3 %}
-        {% assign column_width = 'post-large--one-third medium--one-third' %}
-      {% when 4 %}
-        {% assign column_width = 'post-large--one-quarter medium--one-half' %}
-      {% when 5 %}
-        {% assign column_width = 'post-large--one-fifth medium--one-half' %}
-      {% when 6 %}
-        {% assign column_width = 'post-large--one-sixth medium--one-half' %}
-    {% endcase %}
+      {% if footer_menu_length > 0 %}
+      <div class="grid__item post-large--two-thirds site-footer__links">
+        <ul class="site-footer__menu inline-list">
+          {% for link in linklists['footer'].links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
 
-    {% for block in section.blocks %}
-      {% case block.type %}
-        {% when 'blog' %}
-          <div class="grid__item {{ column_width }} site-footer__links">
-            <h3 class="h4"><a href="/blogs/{{ block.settings.blog }}">{{ 'layout.footer.blog_title' | t }}</a></h3>
-            {% assign article = blogs[block.settings.blog].articles.first %}
-            <p class="h5">{{ article.title | link_to: article.url }}</p>
-            {% if article.image %}
-              {% assign image_alt = article.title | escape %}
-              <p>{{ article | img_url: 'large' | img_tag: image_alt, 'article__image' | link_to: article.url }}</p>
-            {% endif %}
-            {% if article.excerpt.size > 0 %}
-            <div class="clearfix">
-              {{ article.excerpt }}
-            </div>
-            {% else %}
-            <p>{{ article.content | strip_html | truncatewords: 30 }}</p>
-            {% endif %}
-          </div>
-
-        {% when 'menu' %}
-          <div class="grid__item {{ column_width }}">
-            {% unless num_columns == 1 %}
-            <h3 class="h4">{{ block.settings.menu_title | escape }}</h3>
-            {% endunless %}
-            <ul class="site-footer__links{% if num_columns == 1 %} inline-list{% endif %}">
-              {% for link in linklists[block.settings.menu].links %}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-
-        {% when 'social' %}
-          <div class="grid__item {{ column_width }}">
-            <h3 class="h4">{{ 'layout.footer.social_title' | t }}</h3>
-              {% comment %}
-                Loop through the social network links
-              {% endcomment %}
-              {% include 'social-links' %}
-          </div>
-
-        {% when 'text' %}
-          <div class="grid__item {{ column_width }}">
-            <h3 class="h4">{{ block.settings.title | escape }}</h3>
-            <div class="rte">{{ block.settings.richtext }}</div>
-          </div>
-
-        {% when 'newsletter' %}
-          <div class="grid__item {{ column_width }}">
-            <h3 class="h4">{{ 'layout.footer.newsletter_title' | t }}</h3>
-            <p>{{ 'layout.footer.newsletter_caption' | t }}</p>
-            {% include 'newsletter-form' %}
-          </div>
-
-      {% endcase %}
-    {% endfor %}
-  </div>
-
-  <hr class="hr--small hr--clear">
-
-  <div class="grid">
-    <div class="grid__item text-center">
-      <p class="site-footer__links">{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}</p>
+      <div class="grid__item post-large--one-half push--post-large--one-half site-footer__taglines">
+        {% for i in (1..5) %}
+          {% capture tagline_var %}tagline_{{ i }}{% endcapture %}
+          {% if section.settings[tagline_var] != blank %}
+            <p>{{ section.settings[tagline_var] }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
+
   </div>
-</div>
 
 </footer>
 
 {% schema %}
   {
     "name": "Footer",
-    "max_blocks": 6,
-    "blocks": [
+    "settings": [
       {
-        "type": "menu",
-        "name": "Menu",
-        "settings": [
-          {
-            "type": "text",
-            "id": "menu_title",
-            "label": "Heading",
-            "default": "Links"
-          },
-          {
-            "type": "link_list",
-            "id": "menu",
-            "label": "Menu"
-          }
-        ]
+        "type": "header",
+        "content": "Taglines",
+        "info": "Taglines are randomly displayed"
       },
       {
         "type": "text",
-        "name": "Text",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Heading",
-            "default": "Contact us"
-          },
-          {
-            "type": "richtext",
-            "id": "richtext",
-            "label": "Text"
-          }
-        ]
+        "id": "tagline_1",
+        "label": "Tagline #1"
       },
       {
-        "type": "blog",
-        "name": "Latest blog post",
-        "settings": [
-          {
-            "type": "blog",
-            "id": "blog",
-            "label": "Blog"
-          }
-        ]
+        "type": "text",
+        "id": "tagline_2",
+        "label": "Tagline #2"
       },
       {
-        "type": "social",
-        "name": "Social icons",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "paragraph",
-            "content": "Edit your social settings and accounts in General settings"
-          }
-        ]
+        "type": "text",
+        "id": "tagline_3",
+        "label": "Tagline #3"
       },
       {
-        "type": "newsletter",
-        "name": "Newsletter signup",
-        "limit": 1
+        "type": "text",
+        "id": "tagline_4",
+        "label": "Tagline #4"
+      },
+      {
+        "type": "text",
+        "id": "tagline_5",
+        "label": "Tagline #5"
       }
     ]
   }

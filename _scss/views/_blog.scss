@@ -1,0 +1,37 @@
+.comment {
+  margin-bottom: $gutter;
+
+  & + & {
+    border-top: 1px solid $colorBorder;
+    padding-top: $gutter;
+  }
+}
+
+.meta-sep {
+  position: relative;
+  top: -1px;
+  padding: 0 5px;
+  font-size: 0.7em;
+}
+
+.blog-date {
+  margin-top: -0.5em;
+}
+
+aside h4 ~ h4 {
+  margin-top: 1.5 * $gutter;
+}
+
+aside time em {
+  font-size: 0.8em;
+}
+
+@include at-query($max, $medium) {
+  article {
+    margin-bottom: $gutter;
+  }
+}
+.article__image {
+  display: block;
+  margin-bottom: 0.75 * $gutter;
+}

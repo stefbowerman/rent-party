@@ -29,7 +29,7 @@ gulp.task('scripts', function(){
 // Process SCSS
 gulp.task('styles', function(){
 
-  return gulp.src(paths.scss + '/main.scss.liquid')
+  return gulp.src(paths.scss + '/theme.scss.liquid')
     .pipe(cssimport())
     .pipe(gulp.dest('assets/'))
     .on('error', function(error){

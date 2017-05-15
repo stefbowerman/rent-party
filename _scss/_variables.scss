@@ -1,0 +1,194 @@
+$siteWidth: 1180px;
+$slideHeight: 486px;
+
+$gutter: 30px;
+$gridGutter: 30px;
+$gridGutterMobile: 22px;
+$radius: 2px;
+
+$section-spacing: 55px;
+$section-spacing-small: 35px;
+
+$small: 480px;
+$medium: 768px;
+$large: 769px;
+$wide: 1000px; // adjust this as needed
+
+$viewportIncrement: 1px;
+$postSmall: $small + $viewportIncrement;
+$preMedium: $medium - $viewportIncrement;
+$preLarge: $large - $viewportIncrement;
+
+/*================ The following are dependencies of csswizardry grid ================*/
+$breakpoints: (
+  'small' '(max-width: #{$small})',
+  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+  'medium-down' '(max-width: #{$medium})',
+  'large' '(min-width: #{$large}) and (max-width: #{$wide})',
+  'post-large' '(min-width: #{$large})',
+  'wide' '(min-width: #{$wide})'
+);
+$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large', 'post-large', 'wide');
+$breakpoint-has-push:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
+$breakpoint-has-pull:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
+
+/*================ Color variables ================*/
+$colorPrimary: {{ settings.color_primary }};
+$colorSecondary: {{ settings.color_secondary }};
+
+// Button colors
+$colorBtnPrimary: $colorPrimary;
+$colorBtnPrimaryHover: lighten($colorBtnPrimary, 10%);
+$colorBtnPrimaryActive: darken($colorBtnPrimaryHover, 10%);
+$colorBtnPrimaryText: {{ settings.color_button_primary_text }};
+
+$colorBtnSecondary: $colorSecondary;
+$colorBtnSecondaryHover: lighten($colorBtnSecondary, 10%);
+$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
+$colorBtnSecondaryText: {{ settings.color_button_secondary_text }};
+
+$colorBtnTertiary: {{ settings.color_body_bg }};
+$colorBtnTertiaryHover: $colorPrimary;
+$colorBtnTertiaryActive: darken($colorPrimary, 10%);
+$colorBtnTertiaryText: $colorPrimary;
+
+// Text link colors
+$colorLink: $colorPrimary;
+$colorLinkHover: lighten($colorPrimary, 15%);
+
+// Text colors
+$colorTextBody: #202020;
+$colorTopBarText: {{ settings.color_topbar_text }};
+
+// Backgrounds
+$colorBody: {{ settings.color_body_bg }};
+$colorHeader: transparent;
+$colorTopBar: {{ settings.color_topbar_bg }};
+
+// Background images
+{% if settings.bg_custom != blank %}
+$bgImage: '{{ settings.bg_custom | img_url: '1024x' }}';
+{% elsif settings.theme_bg_image %}
+  $bgImage: '{{ 'bg-music.png' | asset_url }}';
+{% else %}
+  $bgImage: false;
+{% endif %}
+
+$bgImageDisplay: {{ settings.bg_image_display }};
+$passwordBgImage: '{{ 'password-page-background.jpg' | asset_url }}';
+
+// Border colors
+$colorBorder: {{ settings.color_borders }};
+
+// Nav and dropdown link background
+$colorNavText: {{ settings.color_header_text }};
+
+// Site Footer
+$colorFooterBg: {{ settings.color_footer_bg }};
+$colorFooterText: {{ settings.color_footer_text }};
+$colorFooterSocialLink: {{ settings.color_footer_social_link }};
+
+// Helper colors
+$disabledGrey: #f6f6f6;
+$disabledBorder: darken($disabledGrey, 25%);
+$errorRed: #d02e2e;
+$errorRedBg: #fff6f6;
+$successGreen: #56ad6a;
+$successGreenBg: #ecfef0;
+
+// Password page
+$passwordPageUseBgImage: true;
+
+/*================ Typography variables ================*/
+@font-face {
+  font-family: "Franklin Gothic";
+  src: url('{{ "ITCFranklinGothicW01-Bk.eot" | asset_url }}?#iefix');
+  src: url('{{ "ITCFranklinGothicW01-Bk.eot" | asset_url }}?#iefix') format("eot"),
+       url('{{ "ITCFranklinGothicW01-Bk.woff" | asset_url }}') format("woff"),
+       url('{{ "ITCFranklinGothicW01-Bk.ttf" | asset_url }}') format("truetype"),
+       url('{{ "ITCFranklinGothicW01-Bk.svg" | asset_url }}#427cca04-e0ee-4395-a5d3-b7d45feeff62') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Franklin Gothic";
+  src: url('{{ "ITCFranklinGothicW01-Hv.eot" | asset_url }}?#iefix');
+  src: url('{{ "ITCFranklinGothicW01-Hv.eot" | asset_url }}?#iefix') format("eot"),
+       url('{{ "ITCFranklinGothicW01-Hv.woff" | asset_url }}') format("woff"),
+       url('{{ "ITCFranklinGothicW01-Hv.ttf" | asset_url }}') format("truetype"),
+       url('{{ "ITCFranklinGothicW01-Hv.svg" | asset_url }}#FranklinGothic-Heavy') format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Souvenir";
+  src: url('{{ "Souvenir.eot" | asset_url }}?#iefix');
+  src: url('{{ "Souvenir.eot" | asset_url }}?#iefix') format("eot"),
+       url('{{ "Souvenir.woff" | asset_url }}') format("woff"),
+       url('{{ "Souvenir.ttf" | asset_url }}') format("truetype"),
+       url('{{ "Souvenir.svg" | asset_url }}#Souvenir') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Souvenir";
+  src: url('{{ "SouvenirItalic.eot" | asset_url }}?#iefix');
+  src: url('{{ "SouvenirItalic.eot" | asset_url }}?#iefix') format("eot"),
+       url('{{ "SouvenirItalic.woff" | asset_url }}') format("woff"),
+       url('{{ "SouvenirItalic.ttf" | asset_url }}') format("truetype"),
+       url('{{ "SouvenirItalic.svg" | asset_url }}#SouvenirItalic') format("svg");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Souvenir";
+  src: url('{{ "SouvenirBold.eot" | asset_url }}?#iefix');
+  src: url('{{ "SouvenirBold.eot" | asset_url }}?#iefix') format("eot"),
+       url('{{ "SouvenirBold.woff" | asset_url }}') format("woff"),
+       url('{{ "SouvenirBold.ttf" | asset_url }}') format("truetype"),
+       url('{{ "SouvenirBold.svg" | asset_url }}#SouvenirBold') format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Souvenir";
+  src: url('{{ "Souvenir-BoldItalic.eot" | asset_url }}?#iefix');
+  src: url('{{ "Souvenir-BoldItalic.eot" | asset_url }}?#iefix') format("eot"),
+       url('{{ "Souvenir-BoldItalic.ttf" | asset_url }}') format("truetype"),
+       url('{{ "Souvenir-BoldItalic.svg" | asset_url }}#Souvenir-BoldItalic') format("svg");
+  font-weight: bold;
+  font-style: italic;
+}
+
+$fontStackSerif:        "Souvenir";
+$fontStackSanSerif:     "Franklin Gothic";
+
+// Body Font
+$bodyFontStack:         $fontStackSerif;
+$baseFontSize:          16px;
+$baseLineHeight:        1.5;
+$baseLetterSpacing:     -0.015em;
+
+// Header Font
+$headerFontStack:       $fontStackSanSerif;
+$headerBaseFontSize:    32px;
+$headerFontWeight:      bold;
+$headerLineHeight:      1.4;
+
+// Navigation and buttons
+$accentFontStack:       $bodyFontStack;
+$accentFontSize:        $baseFontSize;
+$accentFontWeight:      normal;
+
+// Header type settings
+$typeAccentSpacing:     false;
+$typeAccentTransform:   false;
+
+$colorBlankstate: rgba($colorTextBody, 0.35);
+$colorBlankstateBorder: rgba($colorTextBody, 0.15);
+$colorBlankstateBackground: rgba($colorTextBody, 0.05);

@@ -396,8 +396,6 @@ theme.Product = (function() {
       priceA11y: '#PriceA11y',
       quantityElements: '.quantity-selector, label + .js-qty',
       addToCartText: '#AddToCartText',
-      tabTrigger: '.tab-switch__trigger',
-      tabContent: '.tab-switch__content',
       SKU: '.variant-sku'
     };
 
@@ -406,9 +404,6 @@ theme.Product = (function() {
     }
 
     this.zoomType = this.$container.data('image-zoom-type');
-    this.showExtraTab = this.$container.data('show-extra-tab');
-    this.extraTabContent = this.$container.data('extra-tab-content');
-    this.relatedEnabled = this.$container.data('related-enabled');
     this.$productGridImages = $(this.selectors.productGridImages, this.$container);
 
     this.productSingleObject = JSON.parse(document.getElementById('ProductJson-' + sectionId).innerHTML);
@@ -429,15 +424,6 @@ theme.Product = (function() {
         this.productImageGallery();
       } else if (this.zoomType =='zoom-in') {
         productImageZoom();
-      }
-
-      if (!this.showExtraTab || this.extraTabContent) {
-        this.initProductTabs();
-      }
-
-      if (this.relatedEnabled) {
-        theme.cacheSelectors();
-        theme.equalHeights(this.$productGridImages);
       }
     },
 
@@ -464,9 +450,7 @@ theme.Product = (function() {
         $priceA11y: $(this.selectors.priceA11y),
         $quantityElements: $(this.selectors.quantityElements),
         $addToCartText: $(this.selectors.addToCartText),
-        $SKU: $(this.selectors.SKU),
-        $tabTrigger: $(this.selectors.tabTrigger),
-        $tabContent: $(this.selectors.tabContent)
+        $SKU: $(this.selectors.SKU)
       });
     },
 
@@ -564,33 +548,6 @@ theme.Product = (function() {
       });
     },
 
-    initProductTabs: function () {
-      if (!cache.$tabTrigger.length) {
-        return;
-      }
-
-      var $trigger = cache.$tabTrigger,
-          $content = cache.$tabContent,
-          $el,
-          link;
-
-      // Hide extra content areas with JS and set active tab
-      $content.filter(':gt(0)').addClass('is-hidden');
-      $trigger.first().addClass('is-active');
-
-      $trigger.on('click', function(evt) {
-        evt.preventDefault();
-        // set active tab
-        $trigger.removeClass('is-active');
-        $el = $(this).addClass('is-active');
-
-        // hide all content areas, then show desired one
-        link = $el.data('link');
-        $content.addClass('is-hidden');
-        $content.filter('[data-content="' + link + '"]').removeClass('is-hidden');
-      });
-    },
-
     initProductVariant: function() {
       var self = this;
       var product = this.productSingleObject;
@@ -608,11 +565,15 @@ theme.Product = (function() {
         });
       };
 
+      $('#productSelect').wrap('<div class="grid"></div>');
+
       this.optionSelector = new Shopify.OptionSelectors('productSelect', {
         product: product,
         onVariantSelected: selectCallback,
         enableHistoryState: true
       });
+
+      $('.selector-wrapper').wrap('<div class="grid__item post-large--one-half"></div>');
 
       // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
       if (product.options.length == 1 && product.options[0] != 'Title') {
@@ -1095,6 +1056,32 @@ theme.PasswordHeader = (function() {
   return PasswordHeader;
 })();
 
+theme.Footer = (function() {
+  function Footer() {
+    this.selectors = {
+      taglines: '.site-footer__taglines p'
+    };
+    this.init();
+  }
+  
+  Footer.prototype = _.assignIn({}, Footer.prototype, {
+    init: function() {
+      var $taglines = $(this.selectors.taglines);
+      var taglineCount = $taglines.length;
+      var i = 0;
+
+      if(taglineCount > 0){
+        i = Math.floor(Math.random() * taglineCount); // Get a random tagline to display
+        $taglines.filter(function(index) {
+          return i === index; // Since all taglines are hidden by default, show only this random one 
+        }).addClass('is-visible');
+      }
+    }
+  });
+  
+  return Footer;
+})();
+
 
 $(document).ready(function() {
   var sections = new theme.Sections();
@@ -1109,6 +1096,7 @@ $(document).ready(function() {
     sections.register('collection-list-section', theme.CollectionList);
     sections.register('featured-products-section', theme.FeaturedProducts);
     sections.register('password-header', theme.PasswordHeader);
+    sections.register('footer-section', theme.Footer);
 });
 
 theme.cacheSelectors = function () {
