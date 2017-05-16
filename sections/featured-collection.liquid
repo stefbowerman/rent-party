@@ -33,7 +33,7 @@
           <div class="grid-uniform helper-content">
             {% for i in (1..total_products) %}
               <div class="grid__item {{grid_item_width}}">
-                <a href="/admin/products" class="grid-link{% if section.settings.center_grid_link %} text-center{% endif %}">
+                <a href="/admin/products" class="grid-link">
                   <span class="grid-link__image grid-link__image--product">
                     <span class="grid-link__image-centered">
                       {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
@@ -124,11 +124,6 @@
       },
       {
         "type": "checkbox",
-        "id": "vendor_enable",
-        "label": "Show product vendor"
-      },
-      {
-        "type": "checkbox",
         "id": "show_sale_circle",
         "label": "Show product sale circle"
       },
@@ -136,11 +131,6 @@
         "type": "checkbox",
         "id": "show_sold_out_circle",
         "label": "Show product sold out circle"
-      },
-      {
-        "type": "checkbox",
-        "id": "center_grid_link",
-        "label": "Center text below product images"
       }
     ],
     "presets": [

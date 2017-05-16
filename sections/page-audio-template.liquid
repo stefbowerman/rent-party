@@ -1,0 +1,59 @@
+<div class="grid">
+
+  <div class="grid__item post-large--two-thirds push--post-large--one-sixth">
+
+    <div class="section-header">
+      <h1 class="section-header--title">{{ page.title }}</h1>
+    </div>
+
+    <div class="rte">
+      {{ page.content }}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <h4>Mixes</h4>
+      {% for block in section.blocks %}
+        <div style="border-bottom: 1px solid #DDD" data-mix="{{ block.id }}" {{ block.shopify_attributes }}>
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | img_url: '400x' }}" />
+          {% endif %}
+          <h5>{{ block.settings.title }}</h5>
+          <p>{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Audio page",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "audio",
+        "name": "Audio",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
