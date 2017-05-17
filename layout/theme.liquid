@@ -82,13 +82,22 @@
 
   {% section 'header' %}
 
-  <main class="wrapper main-content" role="main">
-    <div class="grid">
-        <div class="grid__item">
-          {{ content_for_layout }}
-        </div>
-    </div>
-  </main>
+  {% comment %} Allows the index page to have full bleed sections {% endcomment %}
+  {% if template.name == "index" %}
+    <main class="main-content" role="main">
+      {{ content_for_layout }}
+    </main>
+  {% else %}
+    <main class="wrapper main-content" role="main">
+      <div class="grid">
+          <div class="grid__item">
+            {{ content_for_layout }}
+          </div>
+      </div>
+    </main>
+  {% endif %}
+
+
 
   {% section 'footer' %}
 

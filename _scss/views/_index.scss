@@ -1,0 +1,74 @@
+.hero__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: {
+    size: cover;
+    position: center;
+  }
+  opacity: 0.5;
+}
+
+.hero__content {
+  position: relative;
+  padding: 40px 0;
+}
+
+.hero__strips {
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 40px;
+  @include clearfix;
+}
+
+.hero__strip {
+  float: left;
+
+  @for $i from 1 through 5 {
+    .hero__strips--count-#{$i} & { 
+      width: percentage(1/$i)
+    }
+  }
+}
+
+.hero__strip-inner {
+  margin: 0 10px;
+  min-height: 360px;
+  background: {
+    size: cover;
+    position: center;
+  }
+}
+
+.hero__menu {
+  @extend .inline-list;
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+
+  li {
+    margin: 0 2px;
+    padding: 0 2px;
+
+    &:not(:last-child) {
+      &:after {
+        content: "|";
+        position: relative;
+        right: -4px;
+      }
+    }
+
+    a {
+      padding: 8px 9px 6px;
+      transition: all 150ms ease-in;
+      &:hover,
+      &:focus {
+        color: white;
+        background-color: $colorBrandPink;
+        transition: all 150ms ease-out;
+      }
+    }
+  }
+}

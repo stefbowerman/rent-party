@@ -1,32 +1,63 @@
 {% if section.blocks.size > 0 %}
-<div data-section-id="{{ section.id }}" data-section-type="hero-section">
+  <div data-section-id="{{ section.id }}" data-section-type="hero-section" style="position:relative;">
     {% comment %}
     {% case section.blocks.size %}
     {% when 1 %}
       {%- assign collection_item_width = 'one-half' -%}
     {% endcase %}
     {% endcomment %}
+
+    {% if section.settings.bg_image %}
+      <style type="text/css">
+        .hero__background {
+            background-image: url({{ section.settings.bg_image | img_url: '800x' }});
+        }
+        @media (min-width: 768px){
+          .hero__background {
+            background-image: url({{ section.settings.bg_image | img_url: '1000x' }});
+         }
+        }
+        @media (min-width: 1000px){
+          .hero__background {
+            background-image: url({{ section.settings.bg_image | img_url: '1200x' }});
+         }
+        }
+      </style>
+      <div class="hero__background"></div>
+    {% endif %}
     
-    <div class="strips">
-      {% for block in section.blocks limit: section.blocks.size %}
-        <div class="strip" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.url }}">{{ block.settings.title }}</a>
-          <img src="{{ block.settings.bg_image | img_url: 'x600' }}" />
+    <div class="wrapper">
+      <div class="grid">
+        <div class="grid__item push--post-large--one-sixth post-large--two-thirds">
+
+          <div class="hero__content">
+          
+            <div class="hero__strips hero__strips--count-{{ section.blocks.size }}">
+              {% for block in section.blocks limit: section.blocks.size %}
+                <div class="hero__strip" {{ block.shopify_attributes }}>
+                  <a href="{{ block.settings.url }}" style="display:block" title="{{ block.settings.title }}">
+                    <div class="hero__strip-inner" style="background-image: url({{ block.settings.bg_image | img_url: 'x600' }})"></div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
+              <ul class="hero__menu">
+              {% for link in linklists[section.settings.menu].links %}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+
         </div>
-      {% endfor %}
+      </div>
     </div>
 
-    {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
-      <h3>MENU</h3>
-      <ul class="inline-list">
-      {% for link in linklists[section.settings.menu].links %}
-        <li>
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        </li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-</div>
+  </div>
 {% endif %}
 
 {% schema %}

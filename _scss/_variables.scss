@@ -36,7 +36,8 @@ $breakpoint-has-pull:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 $colorPrimary: {{ settings.color_primary }};
 $colorSecondary: {{ settings.color_secondary }};
 
-$colorBrand: #FFDD00;
+$colorBrand:     #FFDD00;
+$colorBrandPink: #ec008c;
 
 // Button colors
 $colorBtnPrimary: $colorPrimary;
