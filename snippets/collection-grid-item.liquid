@@ -9,7 +9,7 @@
   {% capture collection_title %}{{ collections[featured].title | escape }}{% endcapture %}
 {% endif %}
 
-<a href="{{ collections[featured].url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" class="grid-link{% if settings.collections_center_grid_link %} text-center{% endif %}">
+<a href="{{ collections[featured].url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" class="grid-link">
   <span class="grid-link__image grid-link__image--collection">
     <span class="grid-link__image-centered">
       {% if collections[featured] == empty %}

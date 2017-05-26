@@ -1,45 +1,21 @@
 {% paginate collection.products by 20 %}
 
-{% assign collection_title = collection.title %}
-{% if collection.handle == "all" %}
-  {% assign collection_title = "Everything" %}
-{% endif %}
-
 <div id="CollectionSection" data-section-id="{{ section.id }}" data-section-type="collection-template" data-sort-enabled="{{ section.settings.sort_enable }}" data-tags-enabled="{{ section.settings.tags_enable }}">
   
-  {% comment %}
-  <div class="section-header section-header--breadcrumb">
-    {% include 'breadcrumb' %}
-  </div>
-  {% endcomment %}
-
   <header class="section-header section-header--large text-center">
-    <h1 class="section-header__title">{{ collection_title }}</h1>
-    {% comment %}
-    <div class="section-header__link--right">
-      {% if section.settings.tags_enable %}
-        {% include 'collection-tags' %}
-      {% endif %}
-      {% if section.settings.sort_enable %}
-        {% include 'collection-sorting' %}
-      {% endif %}
-    </div>
-    {% endcomment %}
+    <h1 class="section-header__title{% if collection.handle == 'all' %} visually-hidden{% endif %}">{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <div class="section-header__description rte">
+        {{ collection.description }}
+      </div>
+    {% endif %}
   </header>
 
-  {% if collection.description != blank %}
-    <div class="rte rte--header">
-      {{ collection.description }}
-    </div>
-    <hr class="hr--clear hr--small">
-  {% endif %}
-
   <div class="grid-uniform grid-link__container">
-    {% assign grid_item_width = 'wide--one-quarter large--one-half medium--one-half' %}
-
     {% for product in collection.products %}
       {% assign featured = product %}
-      <div class="grid__item {{grid_item_width}}">
+      {% assign grid_item_width = 'wide--one-quarter large--one-half medium--one-half' %}
+      <div class="grid__item {{ grid_item_width }}">
         {% include 'product-grid-item' %}
       </div>
     {% else %}
@@ -62,17 +38,6 @@
 {% schema %}
   {
     "name": "Collection pages",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "show_sale_circle",
-        "label": "Show product sale circle"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_sold_out_circle",
-        "label": "Show product sold out circle"
-      }
-    ]
+    "settings": []
   }
 {% endschema %}

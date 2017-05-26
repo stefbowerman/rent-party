@@ -1,4 +1,5 @@
 {% assign featured = section.settings.featured_collection %}
+{% assign current_collection = featured %}
 {% assign products_per_row = section.settings.num_per_row %}
 {% assign rows = section.settings.num_rows %}
 {% assign total_products = products_per_row | times: rows %}

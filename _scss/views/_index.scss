@@ -1,26 +1,83 @@
+.index-section {
+  padding-top: $section-spacing-small / 2;
+  padding-bottom: $section-spacing-small / 2;
+
+  @include at-query($min, $large) {
+    padding-top: $section-spacing / 2;
+    padding-bottom: $section-spacing / 2;
+  }
+
+  .shopify-section:first-child & {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .shopify-section:last-child & {
+    padding-bottom: 0;
+  }
+}
+
+// Hero Section
+
+.hero-section__inner {
+  position:relative;
+  padding: 120px 0 30px;
+  @include at-query($min, $large){
+    height: 100vh;
+    min-height: 500px;
+  }
+}
+
+// .hero__background > .hero__background-slider > .hero__background-slides > .hero__background-slide
 .hero__background {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: {
-    size: cover;
-    position: center;
-  }
   opacity: 0.5;
+  overflow: hidden;
+
+  .hero__background-slider,
+  .hero__background-slides,
+  .hero__background-slide {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
+  .hero__background-slides {
+    
+  }
+
+  .hero__background-slide {
+    background: {
+      position: center;
+      size: cover;
+    }
+  }
 }
 
 .hero__content {
+  height: 100%;
+  @include display-flexbox();
+  @include flex-direction(column);
+  @include justify-content(center);
+}
+
+.hero__strip-container {
   position: relative;
   padding: 40px 0;
 }
 
 .hero__strips {
-  margin-left: -10px;
-  margin-right: -10px;
+
   margin-bottom: 40px;
   @include clearfix;
+  @include at-query($min, $large){
+    margin-left: -10px;
+    margin-right: -10px;
+  }
 }
 
 .hero__strip {
@@ -34,11 +91,14 @@
 }
 
 .hero__strip-inner {
-  margin: 0 10px;
   min-height: 360px;
   background: {
     size: cover;
     position: center;
+  }
+
+  @include at-query($min, $large){
+    margin: 0 10px;
   }
 }
 

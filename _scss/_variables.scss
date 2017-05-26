@@ -1,25 +1,26 @@
-$siteWidth: 1180px;
-$slideHeight: 486px;
+$siteWidth:             1180px;
+$slideHeight:           486px;
 
-$gutter: 30px;
-$gridGutter: 30px;
-$gridGutterMobile: 22px;
-$radius: 2px;
+$gutter:                30px;
+$gridGutter:            30px;
+$gridGutterMobile:      22px;
+$radius:                2px;
 
-$section-spacing: 55px;
+$section-spacing:       55px;
 $section-spacing-small: 35px;
 
-$small: 480px;
-$medium: 768px;
-$large: 769px;
-$wide: 1000px; // adjust this as needed
+$small:                 480px;
+$medium:                768px;
+$large:                 $medium + 1px;
+$wide:                  1000px; // adjust this as needed
 
-$viewportIncrement: 1px;
-$postSmall: $small + $viewportIncrement;
-$preMedium: $medium - $viewportIncrement;
-$preLarge: $large - $viewportIncrement;
+$viewportIncrement:     1px;
+$postSmall:             $small + $viewportIncrement;
+$preMedium:             $medium - $viewportIncrement;
+$preLarge:              $large - $viewportIncrement;
 
 /*================ The following are dependencies of csswizardry grid ================*/
+
 $breakpoints: (
   'small' '(max-width: #{$small})',
   'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
@@ -28,79 +29,78 @@ $breakpoints: (
   'post-large' '(min-width: #{$large})',
   'wide' '(min-width: #{$wide})'
 );
+
 $breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large', 'post-large', 'wide');
 $breakpoint-has-push:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 $breakpoint-has-pull:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 
 /*================ Color variables ================*/
-$colorPrimary: {{ settings.color_primary }};
-$colorSecondary: {{ settings.color_secondary }};
 
-$colorBrand:     #FFDD00;
-$colorBrandPink: #ec008c;
+$black:                   #000;
+$gray-dark:               #212121;
+$gray-medium:             #404040;
+$gray:                    #808080;
+$gray-light:              #BBB;
+$gray-lighter:            #DEDEDE;
+$white:                   #FFF;
+
+$colorPrimary:            $gray-dark;
+$colorSecondary:          $gray-medium;
+
+$colorBrand:              #FFDD00;
+$colorBrandPink:          #ec008c;
 
 // Button colors
-$colorBtnPrimary: $colorPrimary;
-$colorBtnPrimaryHover: lighten($colorBtnPrimary, 10%);
-$colorBtnPrimaryActive: darken($colorBtnPrimaryHover, 10%);
-$colorBtnPrimaryText: {{ settings.color_button_primary_text }};
+$colorBtnPrimary:         $colorPrimary;
+$colorBtnPrimaryHover:    lighten($colorBtnPrimary, 10%);
+$colorBtnPrimaryActive:   darken($colorBtnPrimaryHover, 10%);
+$colorBtnPrimaryText:     $white;
 
-$colorBtnSecondary: $colorSecondary;
-$colorBtnSecondaryHover: lighten($colorBtnSecondary, 10%);
+$colorBtnSecondary:       $colorSecondary;
+$colorBtnSecondaryHover:  lighten($colorBtnSecondary, 10%);
 $colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
-$colorBtnSecondaryText: {{ settings.color_button_secondary_text }};
+$colorBtnSecondaryText:   $white;
 
-$colorBtnTertiary: {{ settings.color_body_bg }};
-$colorBtnTertiaryHover: $colorPrimary;
-$colorBtnTertiaryActive: darken($colorPrimary, 10%);
-$colorBtnTertiaryText: $colorPrimary;
+$colorBtnTertiary:        $white;
+$colorBtnTertiaryHover:   $colorPrimary;
+$colorBtnTertiaryActive:  darken($colorPrimary, 10%);
+$colorBtnTertiaryText:    $colorPrimary;
 
 // Text link colors
-$colorLink: $colorPrimary;
-$colorLinkHover: lighten($colorPrimary, 15%);
+$colorLink:               $colorPrimary;
+$colorLinkHover:          lighten($colorPrimary, 15%);
 
 // Text colors
-$colorTextBody: #202020;
-$colorTopBarText: {{ settings.color_topbar_text }};
+$colorTextBody:           $gray-dark;
 
 // Backgrounds
-$colorBody: {{ settings.color_body_bg }};
-$colorHeader: transparent;
-$colorTopBar: {{ settings.color_topbar_bg }};
+$colorBody:               $white;
+$colorHeader:             transparent;
 
 // Background images
-{% if settings.bg_custom != blank %}
-$bgImage: '{{ settings.bg_custom | img_url: '1024x' }}';
-{% elsif settings.theme_bg_image %}
-  $bgImage: '{{ 'bg-music.png' | asset_url }}';
-{% else %}
-  $bgImage: false;
-{% endif %}
-
-$bgImageDisplay: {{ settings.bg_image_display }};
-$passwordBgImage: '{{ 'password-page-background.jpg' | asset_url }}';
+$passwordBgImage:         '{{ 'password-page-background.jpg' | asset_url }}';
 
 // Border colors
-$colorBorder: {{ settings.color_borders }};
+$colorBorder:             $gray-medium;
 
 // Nav and dropdown link background
-$colorNavText: {{ settings.color_header_text }};
+$colorNavText:            $gray-light;
 
 // Site Footer
-$colorFooterBg: {{ settings.color_footer_bg }};
-$colorFooterText: {{ settings.color_footer_text }};
-$colorFooterSocialLink: {{ settings.color_footer_social_link }};
+$colorFooterBg:           $gray-medium;
+$colorFooterText:         $white;
+$colorFooterSocialLink:   $white;
 
 // Helper colors
-$disabledGrey: #f6f6f6;
-$disabledBorder: darken($disabledGrey, 25%);
-$errorRed: #d02e2e;
-$errorRedBg: #fff6f6;
-$successGreen: #56ad6a;
-$successGreenBg: #ecfef0;
+$disabledGrey:            $gray-lighter;
+$disabledBorder:          darken($disabledGrey, 35%);
+$errorRed:                #d02e2e;
+$errorRedBg:              #fff6f6;
+$successGreen:            #56ad6a;
+$successGreenBg:          #ecfef0;
 
 // Password page
-$passwordPageUseBgImage: true;
+$passwordPageUseBgImage:  true;
 
 /*================ Typography variables ================*/
 @font-face {
@@ -176,12 +176,17 @@ $bodyFontStack:         $fontStackSerif;
 $baseFontSize:          16px;
 $baseLineHeight:        1.5;
 $baseLetterSpacing:     -0.015em;
+$baseWordSpacing:       -0.015em;
 
 // Header Font
 $headerFontStack:       $fontStackSanSerif;
 $headerBaseFontSize:    32px;
 $headerFontWeight:      bold;
 $headerLineHeight:      1.4;
+$headerWordSpacing:     0;
+
+$fontSizeSmall:         $baseFontSize * 0.85;
+$fontSizeLarge:         $baseFontSize * 1.15;
 
 // Navigation and buttons
 $accentFontStack:       $bodyFontStack;
@@ -192,6 +197,15 @@ $accentFontWeight:      normal;
 $typeAccentSpacing:     false;
 $typeAccentTransform:   false;
 
-$colorBlankstate: rgba($colorTextBody, 0.35);
-$colorBlankstateBorder: rgba($colorTextBody, 0.15);
+$colorBlankstate:           rgba($colorTextBody, 0.35);
+$colorBlankstateBorder:     rgba($colorTextBody, 0.15);
 $colorBlankstateBackground: rgba($colorTextBody, 0.05);
+
+// Stacking Context
+$zindex-header:             100;
+
+// Transitions
+
+$trans-duration-short:      150ms;
+$trans-duration-base:       300ms;
+$trans-duration-long:       500ms;

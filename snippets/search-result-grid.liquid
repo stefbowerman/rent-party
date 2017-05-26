@@ -17,7 +17,7 @@
   {% assign grid_item_width = 'wide--one-quarter large--one-third medium--one-half' %}
 {% endunless %}
 
-<div class="grid__item search-result {{ grid_item_width }}{% if settings.collections_center_grid_link %} text-center{% endif %}">
+<div class="grid__item search-result {{ grid_item_width }}">
 
   {% if item.featured_image or item.image %}
     {% assign image_alt = item.title | escape %}

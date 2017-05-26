@@ -1,125 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Minimal",
-    "theme_author": "Shopify",
-    "theme_version": "3.2.0",
-    "theme_documentation_url": "https:\/\/docs.shopify.com\/manual\/more\/official-shopify-themes\/minimal",
-    "theme_support_url": "https:\/\/support.shopify.com\/"
-  },
-  {
-    "name": "Colors",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Background"
-      },
-      {
-        "type": "checkbox",
-        "id": "theme_bg_image",
-        "label": "Use theme background"
-      },
-      {
-        "type": "image_picker",
-        "id": "bg_custom",
-        "label": "Custom image"
-      },
-      {
-        "type": "radio",
-        "id": "bg_image_display",
-        "label": "Image display",
-        "options": [
-          {
-            "value": "tile",
-            "label": "Tile"
-          },
-          {
-            "value": "stretch",
-            "label": "Stretch"
-          }
-        ]
-      },
-      {
-        "type": "color",
-        "id": "color_topbar_bg",
-        "label": "Top bar background",
-        "default": "#204a80"
-      },
-      {
-        "type": "color",
-        "id": "color_body_bg",
-        "label": "Body background",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "color_footer_bg",
-        "label": "Footer background",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "color_borders",
-        "label": "Lines and borders",
-        "default": "#e5e5e5"
-      },
-      {
-        "type": "header",
-        "content": "Buttons"
-      },
-      {
-        "type": "color",
-        "id": "color_primary",
-        "label": "Primary buttons and links",
-        "default": "#204a80"
-      },
-      {
-        "type": "color",
-        "id": "color_button_primary_text",
-        "label": "Primary button text",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "color_secondary",
-        "label": "Secondary buttons",
-        "default": "#dcdcdc"
-      },
-      {
-        "type": "color",
-        "id": "color_button_secondary_text",
-        "label": "Secondary button text",
-        "default": "#ffffff"
-      },
-      {
-        "type": "header",
-        "content": "Text"
-      },
-      {
-        "type": "color",
-        "id": "color_topbar_text",
-        "label": "Top bar",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "color_header_text",
-        "label": "Main menu",
-        "default": "#333333"
-      },
-      {
-        "type": "color",
-        "id": "color_footer_text",
-        "label": "Footer",
-        "default": "#636363"
-      },
-      {
-        "type": "color",
-        "id": "color_footer_social_link",
-        "label": "Social media and payment icons",
-        "default": "#bbbbbb"
-      }
-    ]
+    "theme_name": "Rent Part",
+    "theme_author": "Stefan Bowerman",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https:\/\/github.com\/stefbowerman\/rent-party",
+    "theme_support_url": "https:\/\/github.com\/stefbowerman\/rent-party\/issues"
   },
   {
     "name": "Favicon",
@@ -129,6 +15,42 @@
         "id": "favicon",
         "label": "Favicon image",
         "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Mailing List",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mailchimp_form_action",
+        "label": "MailChimp form action URL",
+        "info": "[Where do I find my MailChimp form action URL?](http:\/\/docs.shopify.com\/support\/configuration\/store-customization\/where-do-i-get-my-mailchimp-form-action)"
+      }
+    ]
+  },
+  {
+    "name": "Sharing",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sharing Images",
+        "info": "These will appear as options when someone shares the website."
+      },
+      {
+        "type": "image_picker",
+        "id": "sharing_image_1",
+        "label": "Image #1"
+      },
+      {
+        "type": "image_picker",
+        "id": "sharing_image_2",
+        "label": "Image #2"
+      },
+      {
+        "type": "image_picker",
+        "id": "sharing_image_3",
+        "label": "Image #3"
       }
     ]
   },

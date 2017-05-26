@@ -60,11 +60,16 @@
 .site-footer__links {
   font-weight: bold;
   a {
+    display: inline-block;
     color: $colorFooterText;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color $trans-duration-short ease-in;
 
     &:hover,
-    &:active {
-      color: $colorLink;
+    &:focus {
+      color: $colorFooterText;
+      border-bottom-color: $colorFooterText;
+      transition: border-bottom-color $trans-duration-short ease-out;
     }
   }
 
@@ -76,18 +81,32 @@
 
 .site-footer__menu {
   margin-bottom: 20px;
+  li {
+    a {
+      display: inline-block;
+      margin: 0 5px 5px;
+    }
+  }
   @include at-query ($min, $large) {
     text-align: right;
-  }
-  li:not(:last-child){
-    a {
-      padding: 0 4px;
-      margin: 0 2px;
-    }
-    &:after {
-      content: "|";
-      position: relative;
-      right: -4px;
+    li {
+      
+      &:after {
+        content: "|";
+        position: relative;
+        right: -4px;
+      }
+
+      &:last-child {
+        
+        &:after {
+          content: none;
+        }
+
+        a {
+          margin-right: 0;
+        }
+      }
     }
   }
 }

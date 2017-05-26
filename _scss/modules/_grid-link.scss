@@ -49,7 +49,7 @@
   .grid-link:active &,
   .grid-link--focus:hover &,
   .grid-link--focus:active & {
-    transform: scale(1.03);
+    @include transform(scale(1.02));
     @include transition(all 250ms ease-out);
   }
 
@@ -71,10 +71,6 @@
   vertical-align: middle;
   width: 100%;
   overflow: hidden;
-}
-
-.grid-link__image-sold-out {
-
 }
 
 .grid-link__info {
@@ -112,48 +108,4 @@
   border-bottom: 1px solid $colorBorder;
   margin-bottom: $gutter / 3;
   padding-bottom: $gutter / 3;
-}
-
-$badgeSize: 60px;
-.badge {
-  display: table;
-  position: absolute;
-  width: $badgeSize;
-  height: $badgeSize;
-  background-color: $colorBrand;
-  color: $colorTextBody;
-  border-radius: 50%;
-  text-transform: uppercase;
-  font-weight: bold;
-  text-align: center;
-  font-size: em($baseFontSize - 3px);
-  line-height: 1.1;
-  z-index: 10;
-  border: 1px solid $colorTextBody;
-  box-shadow: -3px 2px 0px -1px $colorTextBody;
-}
-
-.badge--sold-out {
-  top: 5%;
-  right: 5%;
-  // margin-top: -($badgeSize / 2);
-  // margin-left: -($badgeSize / 2);
-  // background-color: $colorBtnSecondary;
-  // color: $colorBtnSecondaryText;
-}
-
-.badge--sale {
-  // top: -($badgeSize / 5);
-  // right: -($badgeSize / 5);
-}
-
-.badge__text {
-  display: table-cell;
-  vertical-align: middle;
-  padding: 2px 8px 0;
-}
-
-.badge__text--small {
-  font-size: em($baseFontSize - 6px);
-  padding-top: 0;
 }

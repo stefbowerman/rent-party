@@ -16,22 +16,22 @@
   margin-bottom: $gutter;
 }
 
-.section-header--breadcrumb {
-  margin-bottom: $gutter / 2;
-}
-
 .section-header__title {
-  text-transform: uppercase;
+
 }
 
-.section-header__title--left,
-.section-header__link--right {
+.section-header__title--left {
   padding-bottom: $gutter / 2.5;
   margin-bottom: 0;
 }
 
-.section-header__link--right {
-  margin-top: $gutter / 2;
+.section-header__description {
+  max-width: 45em;
+  margin: 0 auto 30px;
+
+  .section-header__title + & {
+    margin-top: 30px;
+  }
 }
 
 @include at-query ($min, $large) {
@@ -48,71 +48,6 @@
     h1, h2, h3, h4,
     .h1, .h2, .h3, .h4 {
       margin-bottom: 0;
-    }
-  }
-
-  .section-header__link--right {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: right;
-    width: 550px;
-    margin-top: 0;
-
-    @include at-query ($max, $medium) {
-      margin-bottom: $gutter;
-    }
-  }
-}
-
-.section-header__link--right {
-
-  .form-horizontal {
-    display: inline-block;
-  }
-
-  .form-horizontal,
-  .collection-view {
-    vertical-align: middle;
-  }
-
-  select,
-  option {
-    color: $colorTextBody;
-  }
-
-  @include at-query ($min, $postSmall) {
-    label + select,
-    .collection-view {
-      margin-left: $gutter / 2;
-    }
-
-    label:not(.label--hidden) + select {
-      margin-left: $gutter / 6;
-    }
-  }
-
-  @include at-query ($min, $large) {
-    select {
-      max-width: 200px;
-    }
-  }
-}
-
-@include at-query ($max, $medium) {
-  .template-collection {
-    .section-header__link--right {
-      display: block;
-      width: 100%;
-      margin-top: 0;
-
-      .form-horizontal {
-        width: 100%;
-
-        select {
-          width: 100%;
-          margin-left: 0;
-        }
-      }
     }
   }
 }

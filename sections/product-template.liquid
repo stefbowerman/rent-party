@@ -5,12 +5,6 @@
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
-  {% comment %}
-  <div class="section-header section-header--breadcrumb">
-    {% include 'breadcrumb' %}
-  </div>
-  {% endcomment %}
-
   <div class="product-single">
     <div class="grid product-single__hero">
 
@@ -18,7 +12,7 @@
       <div class="grid__item post-large--one-half">
         <div class="product-single__photos" id="ProductPhoto">
           {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-          <img src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg"{% if section.settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ featured_image | img_url: '1024x1024' }}"{% endif %}{% if section.settings.product_image_zoom_type == 'lightbox' %} class="zoom-lightbox"{% endif %} data-image-id="{{ featured_image.id }}">
+          <img src="{{ featured_image | img_url: '900x900' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg"{% if section.settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ featured_image | img_url: '900x900' }}"{% endif %}{% if section.settings.product_image_zoom_type == 'lightbox' %} class="zoom-lightbox"{% endif %} data-image-id="{{ featured_image.id }}">
         </div>
 
         {% if section.settings.product_image_zoom_type == 'lightbox' %}
@@ -67,9 +61,9 @@
 
               <ul class="product-single__thumbnails grid-uniform" id="ProductThumbs">
                 {% for image in product.images %}
-                  <li class="grid__item wide--one-quarter large--one-third medium-down--one-third">
-                    <a data-image-id="{{ image.id }}" href="{{ image.src | img_url: '1024x1024' }}" class="product-single__thumbnail">
-                      <img src="{{ image.src | img_url: 'grande' }}" alt="{{ image.alt | escape }}">
+                  <li class="grid__item wide--one-quarter large--one-quarter medium--one-quarter small--one-half">
+                    <a data-image-id="{{ image.id }}" href="{{ image.src | img_url: '900x900' }}" class="product-single__thumbnail">
+                      <img src="{{ image.src | img_url: '250x250' }}" alt="{{ image.alt | escape }}">
                     </a>
                   </li>
                 {% endfor %}
@@ -93,7 +87,7 @@
                 {% endfor %}
               </select>
 
-              <div class="product-single__quantity{% unless section.settings.product_quantity_enable %} is-hidden{% endunless %}">
+              <div class="product-single__quantity is-hidden">
                 <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
                 <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
               </div>
@@ -149,11 +143,6 @@
   {
     "name": "Product pages",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "product_quantity_enable",
-        "label": "Show quantity selector"
-      },
       {
         "type": "select",
         "id": "product_image_zoom_type",

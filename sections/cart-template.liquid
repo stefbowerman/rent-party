@@ -3,16 +3,16 @@
   This is your /cart template.
 
 {% endcomment %}
-<div id="CartSection" data-section-id="{{ section.id }}" data-section-type="cart-template" data-notes-enable="{{ section.settings.cart_notes_enable }}">
+<div id="CartSection" data-section-id="{{ section.id }}" data-section-type="cart-template">
   {% if cart.item_count > 0 %}
 
     <form action="/cart" method="post" novalidate class="cart">
 
       <div class="section-header">
-        <h1 class="section-header__title">{{ 'cart.general.title' | t }}</h1>
+        <h1 class="section-header__title text-center">{{ 'cart.general.title' | t }}</h1>
       </div>
 
-      <div class="cart__row medium-down--hide cart__header-labels">
+      <div style="display: none !important" class="cart__row medium-down--hide cart__header-labels">
         <div class="grid--full">
           <div class="grid__item post-large--one-half push--post-large--one-half">
             <div class="grid--full">
@@ -37,22 +37,17 @@
         <div class="cart__row">
           <div class="grid--full cart__row--table-large">
 
-            <div class="grid__item post-large--one-half">
+            <div class="grid__item post-large--five-eighths">
               <div class="grid">
 
                 <div class="grid__item one-third">
                   <a href="{{ item.url | within: collections.all }}" class="cart__image">
-
-                    {% comment %}
-                      More image size options at:
-                        - http://docs.shopify.com/themes/filters/product-img-url
-                    {% endcomment %}
-                    <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                    <img src="{{ item | img_url: '150x' }}" alt="{{ item.title | escape }}">
                   </a>
                 </div>
 
                 <div class="grid__item two-thirds">
-                  <a href="{{ item.url }}" class="h5">
+                  <a href="{{ item.url }}" class="h5 cart__item-title">
                     {{ item.product.title }}
                   </a>
                   {% unless item.variant.title contains 'Default' %}
@@ -95,7 +90,7 @@
               </div>
             </div>
 
-            <div class="grid__item post-large--one-half">
+            <div class="grid__item post-large--three-eighths">
               <div class="grid--full cart__row--table-large">
 
                 <div class="grid__item one-third">
@@ -134,24 +129,7 @@
 
       <div class="cart__row">
         <div class="grid">
-          {% comment %}
-            Optional, add a textarea for special notes
-              - Your theme settings can turn this on or off. Default is on.
-              - Make sure you have name="note" for the message to be submitted properly
-          {% endcomment %}
-          {% if section.settings.cart_notes_enable %}
-            {% assign noteSize = cart.note | size %}
-            <div class="grid__item post-large--five-twelfths">
-              <button type="button" class="text-link cart__note-add{% if noteSize > 0 %} is-hidden{% endif %}">
-                {{ 'cart.label.add_note' | t }}
-              </button>
-              <div class="cart__note{% if noteSize > 0 %} is-active{% endif %}">
-                <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
-                <textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
-              </div>
-            </div>
-          {% endif %}
-          <div class="grid__item text-right{% if section.settings.cart_notes_enable %} post-large--seven-twelfths{% endif %}">
+          <div class="grid__item text-right">
             <p>
               <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
               <span class="h5 cart__subtotal">{{ cart.total_price | money }}</span>
@@ -160,7 +138,10 @@
                 <small class="cart-subtotal__savings">{{ 'cart.general.savings_html' | t: price: savings }}</small>
               {% endif %}
             </p>
-            <p><em>{{ 'cart.general.shipping_at_checkout' | t }}</em></p>
+
+            {% if section.settings.cart_info_message != blank %}
+              <p><em>{{ section.settings.cart_info_message }}</em></p>
+            {% endif %}
 
             {% comment %}
               Continue shopping button
@@ -198,9 +179,9 @@
     "name": "Cart page",
     "settings": [
       {
-        "type": "checkbox",
-        "id": "cart_notes_enable",
-        "label": "Enable order notes"
+        "type": "textarea",
+        "id": "cart_info_message",
+        "label": "Cart info message"
       }
     ]
   }

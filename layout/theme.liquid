@@ -16,7 +16,7 @@
 
   <!-- Title and description ================================================== -->
   <title>
-  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} | {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
   </title>
 
   {% if page_description %}
@@ -68,6 +68,7 @@
   {% include 'oldIE-js' %}
 
   {{ '//ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js' | script_tag }}
+  {{ 'modernizr.custom.min.js' | asset_url | script_tag }}
 
   {% comment %}
     If you store has customer accounts disabled, you can remove the following JS file
@@ -88,19 +89,20 @@
       {{ content_for_layout }}
     </main>
   {% else %}
-    <main class="wrapper main-content" role="main">
-      <div class="grid">
-          <div class="grid__item">
-            {{ content_for_layout }}
-          </div>
+    <main class="main-content" role="main">
+      <div class="wrapper">
+        <div class="grid">
+            <div class="grid__item">
+              {{ content_for_layout }}
+            </div>
+        </div>
       </div>
     </main>
   {% endif %}
 
-
-
   {% section 'footer' %}
 
+  {{ 'rentparty.dependencies.js'  | asset_url | script_tag }}
   {{ 'theme.js' | asset_url | script_tag }}
 
 </body>

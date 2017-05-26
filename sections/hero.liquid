@@ -1,36 +1,39 @@
 {% if section.blocks.size > 0 %}
-  <div data-section-id="{{ section.id }}" data-section-type="hero-section" style="position:relative;">
-    {% comment %}
-    {% case section.blocks.size %}
-    {% when 1 %}
-      {%- assign collection_item_width = 'one-half' -%}
-    {% endcase %}
-    {% endcomment %}
+  <div class="hero-section__inner" data-section-id="{{ section.id }}" data-section-type="hero-section">
 
-    {% if section.settings.bg_image %}
-      <style type="text/css">
-        .hero__background {
-            background-image: url({{ section.settings.bg_image | img_url: '800x' }});
-        }
-        @media (min-width: 768px){
-          .hero__background {
-            background-image: url({{ section.settings.bg_image | img_url: '1000x' }});
-         }
-        }
-        @media (min-width: 1000px){
-          .hero__background {
-            background-image: url({{ section.settings.bg_image | img_url: '1200x' }});
-         }
-        }
-      </style>
-      <div class="hero__background"></div>
-    {% endif %}
-    
-    <div class="wrapper">
+    <div class="hero__background">
+      <div class="hero__background-slider" data-speed="{{ section.settings.slideshow_speed }}">
+        <ul class="hero__background-slides">
+        {% for i in (1..4) %}
+          {% capture bg_img %}bg_image_{{ i }}{% endcapture %}
+            {% if section.settings[bg_img] %}
+            <style type="text/css">
+              .hero__background-slide--{{ i }} {
+                  background-image: url({{ section.settings[bg_img] | img_url: '800x' }});
+              }
+              @media (min-width: 768px){
+                .hero__background-slide--{{ i }} {
+                  background-image: url({{ section.settings[bg_img] | img_url: '1000x' }});
+               }
+              }
+              @media (min-width: 1000px){
+                .hero__background-slide--{{ i }} {
+                  background-image: url({{ section.settings[bg_img] | img_url: '1200x' }});
+               }
+              }
+            </style>
+            <li class="hero__background-slide hero__background-slide--{{ i }}"></li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  
+    <div class="hero__content wrapper">
       <div class="grid">
         <div class="grid__item push--post-large--one-sixth post-large--two-thirds">
 
-          <div class="hero__content">
+          <div class="hero__strip-container">
           
             <div class="hero__strips hero__strips--count-{{ section.blocks.size }}">
               {% for block in section.blocks limit: section.blocks.size %}
@@ -45,9 +48,7 @@
             {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
               <ul class="hero__menu">
               {% for link in linklists[section.settings.menu].links %}
-                <li>
-                  <a href="{{ link.url }}">{{ link.title }}</a>
-                </li>
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
               </ul>
             {% endif %}
@@ -66,14 +67,61 @@
     "class": "hero-section",
     "settings": [
       {
-        "type": "image_picker",
-        "id": "bg_image",
-        "label": "Background Image"
-      },
-      {
         "type": "link_list",
         "id": "menu",
         "label": "Menu"
+      },
+      {
+        "type": "header",
+        "content": "Background Slideshow",
+        "info": "Select up to 4 images to fade in and out behind the blocks"
+      },
+      {
+        "type": "select",
+        "id": "slideshow_speed",
+        "label": "Change slides every",
+        "options": [
+          {
+            "value": "2000",
+            "label": "2 seconds"
+          },
+          {
+            "value": "3000",
+            "label": "3 seconds"
+          },
+          {
+            "value": "4000",
+            "label": "4 seconds"
+          },
+          {
+            "value": "5000",
+            "label": "5 seconds"
+          },
+          {
+            "value": "7000",
+            "label": "7 seconds"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image_1",
+        "label": "Image #1"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image_2",
+        "label": "Image #2"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image_3",
+        "label": "Image #3"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image_4",
+        "label": "Image #4"
       }
     ],
     "blocks": [

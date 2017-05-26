@@ -1,0 +1,139 @@
+// if settings.social_sharing_products or settings.social_sharing_blog 
+  /*================ Social share buttons ================*/
+$shareButtonHeight: 22px;
+$shareButtonCleanHeight: 30px;
+$shareBorderColor: #ececec;
+
+.social-sharing {
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  * {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+  }
+
+  a {
+    display: inline-block;
+    color: #fff;
+    border-radius: 2px;
+    margin: 5px 10px 5px 0;
+    height: $shareButtonHeight;
+    line-height: $shareButtonHeight;
+    text-decoration: none;
+    font-weight: normal;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  span {
+    display: inline-block;
+    vertical-align: top;
+    height: $shareButtonHeight;
+    line-height: $shareButtonHeight;
+    font-size: 12px;
+  }
+
+  .icon {
+    padding: 0 5px 0 10px;
+
+    &:before {
+      line-height: $shareButtonHeight;
+    }
+  }
+
+  /*================ Large Buttons ================*/
+  &.is-large a {
+    height: $shareButtonHeight*2;
+    line-height: $shareButtonHeight*2;
+
+    span {
+      height: $shareButtonHeight*2;
+      line-height: $shareButtonHeight*2;
+      font-size: 18px;
+    }
+
+    .icon {
+      padding: 0 10px 0 18px;
+
+      &:before {
+        line-height: $shareButtonHeight*2;
+      }
+    }
+  }
+}
+
+.share-title {
+  font-weight: 900;
+  font-size: 12px;
+  padding-right: 10px;
+
+  .is-large & {
+    padding-right: 16px;
+  }
+}
+
+.share-facebook {
+  background-color: #3b5998;
+
+  &:hover {
+    background-color: darken(#3b5998, 10%);
+  }
+}
+
+.share-twitter {
+  background-color: #00aced;
+
+  &:hover {
+    background-color: darken(#00aced, 10%);
+  }
+}
+
+.share-pinterest {
+  background-color: #cb2027;
+
+  &:hover {
+    background-color: darken(#cb2027, 10%);
+  }
+}
+
+/*================ Clean Buttons ================*/
+.social-sharing.is-clean {
+  a {
+    background-color: #fff;
+    border: 1px solid $shareBorderColor;
+    color: #333;
+    height: $shareButtonCleanHeight;
+    line-height: $shareButtonCleanHeight;
+
+    span {
+      height: $shareButtonCleanHeight;
+      line-height: $shareButtonCleanHeight;
+      font-size: 13px;
+    }
+
+    &:hover {
+      background-color: $shareBorderColor;
+    }
+
+    .share-title {
+      font-weight: normal;
+    }
+  }
+
+  .icon-facebook {
+    color: #3b5998;
+  }
+
+  .icon-twitter {
+    color: #00aced;
+  }
+
+  .icon-pinterest {
+    color: #cb2027;
+  }
+}
+
+// endif

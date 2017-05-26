@@ -1,0 +1,43 @@
+<div class="grid">
+
+  <div class="grid__item post-large--one-half push--post-large--one-quarter">
+
+    <div class="section-header text-center">
+      <h1 class="section-header__title">{{ page.title }}</h1>
+    </div>
+
+    <div class="rte">
+      {{ page.content }}
+
+      {% if settings.mailchimp_form_action != blank %}
+        {% if section.settings.form_text != blank %}
+          <p>{{ section.settings.form_text }}</p>
+        {% endif %}
+        <form action="{{ settings.mailchimp_form_action }}" method="post" target="_blank">
+          <input type="email" name="EMAIL" placeholder="example@mail.com" value="" required="required"/>
+          {% comment %} real people should not fill this in and expect good things - do not remove this or risk form bot signups {% endcomment %}
+          <div style="position: absolute; left: -5000px;"><input type="text" name="b_860d69c1b641125be92c01f64_1a8ecda325" tabindex="-1" value=""></div>
+          <p style="text-align: right">
+            <input type="submit" class="btn" value="Submit">
+          </p>
+        </form>
+      {% endif %}
+      
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Mailing List",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "form_text",
+        "label": "Form text"
+      }
+    ]
+  }
+{% endschema %}

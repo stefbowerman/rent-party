@@ -17,6 +17,7 @@ html input[disabled] {
   line-height: 1.42;
   text-decoration: none;
   text-align: center;
+  text-transform: uppercase;
   vertical-align: middle;
   white-space: nowrap;
   cursor: pointer;
@@ -25,6 +26,8 @@ html input[disabled] {
   -webkit-appearance: none;
   -moz-appearance: none;
   border-radius: $radius;
+  transition: background-color $trans-duration-short ease-in,
+              color            $trans-duration-short ease-in;
 
   /*================ Set primary button colors - can override later ================*/
   background-color: $colorBtnPrimary;
@@ -33,6 +36,8 @@ html input[disabled] {
   &:hover {
     background-color: $colorBtnPrimaryHover;
     color: $colorBtnPrimaryText;
+    transition: background-color $trans-duration-short ease-out,
+                color            $trans-duration-short ease-out;
   }
 
   &:active,

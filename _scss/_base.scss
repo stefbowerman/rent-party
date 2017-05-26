@@ -6,7 +6,6 @@ html, body {
   padding: 0;
   margin: 0;
 }
-
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
   display: block;
 }
@@ -30,7 +29,7 @@ html {
   background-color: $colorFooterBg;
 }
 
-body {
+html, body {
   background-color: $colorBody;
 }
 
@@ -68,6 +67,7 @@ select {
   font-size: $baseFontSize;
   line-height: $baseLineHeight;
   letter-spacing: $baseLetterSpacing;
+  word-spacing: $baseWordSpacing;
   font-family: $bodyFontStack;
   color: $colorTextBody;
   -webkit-font-smoothing: antialiased;
@@ -79,6 +79,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: $headerFontWeight;
   margin: 0 0 ($gutter / 2);
   line-height: $headerLineHeight;
+  word-spacing: $headerWordSpacing;
 
   a {
     text-decoration: none;
@@ -91,10 +92,12 @@ a,
   color: $colorLink;
   text-decoration: none;
   background: transparent;
+  transition: color $trans-duration-short ease-in;
 
   &:hover,
   &:focus {
     color: $colorLinkHover;
+    transition: color $trans-duration-short ease-out;
   }
 }
 
@@ -148,7 +151,7 @@ b, strong {
 }
 
 small {
-  font-size: 0.9em;
+  font-size: $fontSizeSmall;
 }
 
 sup, sub {
