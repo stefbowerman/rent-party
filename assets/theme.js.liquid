@@ -842,38 +842,23 @@
     function HeroSection(container) {
 
       this.selectors = {
-        slider: '.hero__background-slider',
-        slide:  '.hero__background-slide',
-        video:  '.hero__content-video',
-        videoJSON: '#hero-video-json',
-        newVideoTarget: '.hero__content-video > .video-wrapper'
+        slider:       '.hero__background-slider',
+        slide:        '.hero__background-slide',
+        videoBlock:   '.hero__content-video',
+        videoWrapper: '.video-wrapper'
       }
 
       // Initialize video
-
-      var videosJSON;
-      var videosJSONKeys;
       var i;
-      var playerHtml;
-      var videoToPlay
+      var $videoBlocks = $(this.selectors.videoBlock);
 
-      if($(this.selectors.videoJSON).length){
-        videosJSON = JSON.parse($(this.selectors.videoJSON).html());
-        videosJSONKeys = _.keys(videosJSON);
-        i = Math.floor(Math.random() * _.keys(videosJSON).length);
-
-        videoToPlay = videosJSON[ videosJSONKeys[i] ];
-
-        if(videoToPlay.video_id.length){
-          playerHtml = '<iframe src="//player.vimeo.com/video/' + videoToPlay.video_id + '?color=ec008c&byline=0&portrait=0&badge=0&title=0" frameborder="0" allowfullscreen></iframe>';
-          $(this.selectors.newVideoTarget).html(playerHtml);
-        }
-
+      if($videoBlocks.length){
+        i = Math.floor(Math.random() * $videoBlocks.length);
+        this.displayVideo( $videoBlocks.eq(i) );
       }
 
       // Initialize the slider
       var $slider = $(this.selectors.slider);
-      var slideshow;
       var sliderArgs = {
         selector: ".hero__background-slides > .hero__background-slide",
         slideshowSpeed: $slider.data('speed') || 5000,
@@ -895,7 +880,7 @@
           sliderArgs.slideshowSpeed = 0;
         }
 
-        slideshow = $slider.flexslider(sliderArgs);
+        $slider.flexslider(sliderArgs);
       
         $(window).on('resize', afterResize(function() {
             $slider.data('flexslider').resize();
@@ -910,20 +895,25 @@
   })();
 
   theme.HeroSection.prototype = _.assignIn({}, theme.HeroSection.prototype, {
-    onUnload: function() {
-    },
-    onLoad: function(){
-      console.log(JSON.parse($(this.selectors.videoJSON).html()));
-    },
     onBlockSelect: function(evt) {
-      // this.showVideo( $(evt.target) );
-      console.log(JSON.parse($(this.selectors.videoJSON).html()));
+      this.displayVideo($(evt.target))
     },
-    onBlockDeselect: function() {
-
-    },
-    showVideo: function($video){
+    displayVideo: function($videoBlock){
       
+      if( !$videoBlock ) return;
+
+      var playerHtml;
+
+      if($videoBlock.data('video-id')){
+        playerHtml = '<iframe src="//player.vimeo.com/video/' + $videoBlock.data('video-id') + '?color=ec008c&byline=0&portrait=0&badge=0&title=0" frameborder="0" allowfullscreen></iframe>';
+      }
+      else {
+        playerHtml = '<p style="text-align:center">Add a Vimeo link and the video will show up here</p>';
+      }
+      
+      $(this.selectors.videoBlock).removeClass('is-current').find(this.selectors.videoWrapper).empty();
+      $videoBlock.find(this.selectors.videoWrapper).html(playerHtml);
+      $videoBlock.addClass('is-current');
     }
   });
 

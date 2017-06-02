@@ -3526,6 +3526,10 @@ input.cart__quantity-selector {
   @include at-query($min, $large){
     margin-top: -7%;
   }
+
+  .supports-js &:not(.is-current) {
+    display: none;
+  }
 }
 [data-section-type="page-analog"] {
   .media-list {
