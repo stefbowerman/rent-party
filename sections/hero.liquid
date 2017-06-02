@@ -1,6 +1,5 @@
 {% if section.blocks.size > 0 %}
   <div class="hero-section__inner" data-section-id="{{ section.id }}" data-section-type="hero-section">
-
     <div class="hero__background">
       <div class="hero__background-slider" data-speed="{{ section.settings.slideshow_speed }}">
         <ul class="hero__background-slides">
@@ -31,28 +30,25 @@
   
     <div class="hero__content wrapper">
       <div class="grid">
-        <div class="grid__item push--post-large--one-sixth post-large--two-thirds">
-
-          <div class="hero__strip-container">
+        <div class="grid__item push--wide--one-sixth wide--two-thirds push--large--one-eighth large--three-quarters">
           
-            <div class="hero__strips hero__strips--count-{{ section.blocks.size }}">
-              {% for block in section.blocks limit: section.blocks.size %}
-                <div class="hero__strip" {{ block.shopify_attributes }}>
-                  <a href="{{ block.settings.url }}" style="display:block" title="{{ block.settings.title }}">
-                    <div class="hero__strip-inner" style="background-image: url({{ block.settings.bg_image | img_url: 'x600' }})"></div>
-                  </a>
-                </div>
-              {% endfor %}
+          {% if section.blocks.size > 0 %}
+            <script type="application/json" id="hero-video-json">
+              {
+                {% for block in section.blocks %}
+                  "{{ block.id }}": {
+                    "video_type": "{{ block.settings.video_url.type }}",
+                    "video_id":   "{{ block.settings.video_url.id }}"
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              }
+            </script>
+            <div class="hero__content-video">
+              <div class="video-wrapper">
+                {% comment %} Fill in with iframe here {% endcomment %}
+              </div>
             </div>
-
-            {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
-              <ul class="hero__menu">
-              {% for link in linklists[section.settings.menu].links %}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {% endfor %}
-              </ul>
-            {% endif %}
-          </div>
+          {% endif %}
 
         </div>
       </div>
@@ -66,11 +62,6 @@
     "name": "Hero",
     "class": "hero-section",
     "settings": [
-      {
-        "type": "link_list",
-        "id": "menu",
-        "label": "Menu"
-      },
       {
         "type": "header",
         "content": "Background Slideshow",
@@ -126,24 +117,15 @@
     ],
     "blocks": [
       {
-        "type": "strip",
-        "name": "Strip",
-        "limit": 5,
+        "type": "video",
+        "name": "Video",
+        "limit": 3,
         "settings": [
           {
-            "type": "url",
-            "id": "url",
-            "label": "URL"
-          },
-          {
-            "type": "image_picker",
-            "id": "bg_image",
-            "label": "Background Image"
-          },
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Title"
+            "type": "video_url",
+            "id": "video_url",
+            "label": "Vimeo link",
+            "accept": ["vimeo"]
           }
         ]
       }

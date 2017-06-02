@@ -1,0 +1,80 @@
+<div data-section-id="{{ section.id }}" data-section-type="page-video">
+ 
+  <div class="grid">
+
+    {% comment %} Main content {% endcomment %}
+    <div class="grid__item post-large--three-quarters push--post-large--one-quarter">
+      <div class="video-content">
+        <div class="video-target video-wrapper">
+          {% comment %} Gets filled in with a video via JS {% endcomment %}
+        </div>
+        <div class="video-caption-container">
+          {% for block in section.blocks %}
+            <div class="video-caption" data-video-id="{{ block.settings.video_url.id }}">
+              {% if block.settings.title %}
+                <h3>{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.description %}
+                <p>{{ block.settings.description }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% comment %} Sidebar should go second in the DOM {% endcomment %}
+    <div class="grid__item post-large--one-quarter pull--post-large--three-quarters">
+
+      {% if page.content.size > 0 %}
+        <div class="rte" style="margin-bottom: 30px;">
+          {{ page.content }}
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <ul class="media-list">
+          {% for block in section.blocks %}
+            <li id="video-block-{{ block.id }}" class="media-list__video" data-block-id="{{ block.id }}" data-video-id="{{ block.settings.video_url.id }}" {{ block.shopify_attributes }}>
+              <span class="h5">{{ block.settings.title }}</span>
+            </li>
+          {% endfor %}          
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Video page",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "video",
+        "name": "Video",
+        "settings": [
+          {
+            "type": "video_url",
+            "id": "video_url",
+            "label": "Video URL",
+            "accept": ["vimeo"],
+            "info": "Vimeo only"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

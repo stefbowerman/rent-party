@@ -4,15 +4,17 @@
 
 {% endcomment %}
 <div id="CartSection" data-section-id="{{ section.id }}" data-section-type="cart-template">
+
+  <div class="section-header">
+    <h1 class="section-header__title text-center">{{ 'cart.general.title' | t }}</h1>
+  </div>
+
   {% if cart.item_count > 0 %}
 
     <form action="/cart" method="post" novalidate class="cart">
 
-      <div class="section-header">
-        <h1 class="section-header__title text-center">{{ 'cart.general.title' | t }}</h1>
-      </div>
-
-      <div style="display: none !important" class="cart__row medium-down--hide cart__header-labels">
+      {% comment %}
+      <div class="cart__row medium-down--hide cart__header-labels">
         <div class="grid--full">
           <div class="grid__item post-large--one-half push--post-large--one-half">
             <div class="grid--full">
@@ -29,6 +31,7 @@
           </div>
         </div>
       </div>
+      {% endcomment %}
 
       {% comment %}
         Loop through products in the cart
@@ -40,71 +43,73 @@
             <div class="grid__item post-large--five-eighths">
               <div class="grid">
 
-                <div class="grid__item one-third">
+                <div class="grid__item three-eighths medium--one-quarter">
                   <a href="{{ item.url | within: collections.all }}" class="cart__image">
-                    <img src="{{ item | img_url: '150x' }}" alt="{{ item.title | escape }}">
+                    <img src="{{ item | img_url: '250x' }}" alt="{{ item.title | escape }}">
                   </a>
                 </div>
 
-                <div class="grid__item two-thirds">
-                  <a href="{{ item.url }}" class="h5 cart__item-title">
-                    {{ item.product.title }}
-                  </a>
-                  {% unless item.variant.title contains 'Default' %}
-                    <br>
-                    <small>{{ item.variant.title }}</small>
-                  {% endunless %}
+                <div class="grid__item five-eighths medium--three-quarters">
+                  <div class="cart__item-essential">
+                    <span class="cart__item-mini-price h5">{{ item.price | money }}</span>
+                    <a href="{{ item.url }}" class="h5 cart__item-title">
+                      {{ item.product.title }}
+                    </a>
+                    {% unless item.variant.title contains 'Default' %}
+                      <br>
+                      <small>{{ item.variant.title }}</small>
+                    {% endunless %}
 
-                  {% comment %}
-                    Optional, loop through custom product line items if available
+                    {% comment %}
+                      Optional, loop through custom product line items if available
 
-                    For more info on line item properties, visit:
-                      - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
-                  {% endcomment %}
-                  {% assign propertySize = item.properties | size %}
-                  {% if propertySize > 0 %}
-                    {% for p in item.properties %}
-                      {% assign first_character_in_key = p.first | truncate: 1, '' %}
-                      {% unless p.last == blank or first_character_in_key == '_' %}
-                        <br>
-                        {{ p.first }}:
+                      For more info on line item properties, visit:
+                        - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+                    {% endcomment %}
+                    {% assign propertySize = item.properties | size %}
+                    {% if propertySize > 0 %}
+                      {% for p in item.properties %}
+                        {% assign first_character_in_key = p.first | truncate: 1, '' %}
+                        {% unless p.last == blank or first_character_in_key == '_' %}
+                          <br>
+                          {{ p.first }}:
 
-                        {% comment %}
-                          Check if there was an uploaded file associated
-                        {% endcomment %}
-                        {% if p.last contains '/uploads/' %}
-                          <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
-                        {% else %}
-                          {{ p.last }}
-                        {% endif %}
+                          {% comment %}
+                            Check if there was an uploaded file associated
+                          {% endcomment %}
+                          {% if p.last contains '/uploads/' %}
+                            <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                          {% else %}
+                            {{ p.last }}
+                          {% endif %}
 
-                      {% endunless %}
-                    {% endfor %}
-                  {% endif %}
-
-                  <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
-                    <small>{{ 'cart.general.remove' | t }}</small>
-                  </a>
+                        {% endunless %}
+                      {% endfor %}
+                    {% endif %}
+                    <div class="cart__mini-quantity">
+                      <small>Qty: {{ item.quantity }}</small>
+                    </div>
+                    <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
+                      <small>{{ 'cart.general.remove' | t }}</small>
+                    </a>
+                  </div>
                 </div>
 
               </div>
             </div>
 
-            <div class="grid__item post-large--three-eighths">
+            <div class="grid__item post-large--three-eighths medium-down--hide">
               <div class="grid--full cart__row--table-large">
 
                 <div class="grid__item one-third">
-                  <span class="cart__mini-labels">{{ 'cart.label.price' | t }}</span>
                   <span class="h5">{{ item.price | money }}</span>
                 </div>
 
                 <div class="grid__item one-third text-center">
-                  <label for="updates_{{ item.key }}" class="cart__mini-labels">{{ 'cart.label.quantity' | t }}</label>
                   <input type="number" class="cart__quantity-selector" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" aria-label="{{ 'cart.label.quantity' | t }}">
                 </div>
 
                 <div class="grid__item one-third text-right">
-                  <span class="cart__mini-labels">{{ 'cart.label.total' | t }}</span>
                   <span class="h5">
                     {% if item.original_line_price != item.line_price %}
                       <small class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></small>
@@ -146,13 +151,18 @@
             {% comment %}
               Continue shopping button
             {% endcomment %}
-            <a class="btn--secondary" href="/collections/all">{{ 'cart.general.continue_shopping' | t }}</a>
+            <div class="cart__alternate-buttons">
+              <a class="btn--secondary" href="/collections/all">{{ 'cart.general.continue_shopping' | t }}</a>
+              <button type="submit" name="update" class="btn--secondary update-cart">{{ 'cart.general.update' | t }}</button>
+            </div>
 
-            <button type="submit" name="update" class="btn--secondary update-cart">{{ 'cart.general.update' | t }}</button>
-            <button type="submit" name="checkout" class="btn">{{ 'cart.general.checkout' | t }}</button>
+            <button type="submit" name="checkout" class="btn btn-checkout">{{ 'cart.general.checkout' | t }}</button>
 
             {% if additional_checkout_buttons %}
-              <div class="cart__additional_checkout">{{ content_for_additional_checkout_buttons }}</div>
+              <div class="cart__additional-checkout-separator">
+                <span class="h4">or</span>
+              </div>
+              <div class="cart__additional-checkout">{{ content_for_additional_checkout_buttons }}</div>
             {% endif %}
           </div>
         </div>
@@ -165,12 +175,13 @@
     {% comment %}
       The cart is empty
     {% endcomment %}
-    <h2>{{ 'cart.general.title' | t }}</h2>
     <p class="cart--empty-message">{{ 'cart.general.empty' | t }}</p>
     <div class="cart--cookie-message">
       <p>{{ 'cart.general.cookies_required' | t }}</p>
     </div>
-    <p class="cart__continue-btn">{{ 'cart.general.continue_browsing_html' | t }}</p>
+    <p class="cart__continue-btn text-center">
+      <a href="/collections/all" class="btn">{{ 'cart.general.continue_shopping' | t }}</a>
+    </p>
   {% endif %}
 </div>
 

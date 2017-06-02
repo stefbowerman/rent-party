@@ -1,5 +1,5 @@
 // Also, $.flexslider, $.zoom, $.magnificPopup, $.dropkick, $.stick
-(function($, enquire, _, FastClick, imagesLoaded, respond, undefined){
+(function($, enquire, _, FastClick, imagesLoaded, respond, Vimeo, undefined){
 
   /* Simple jQuery Equal Heights @version 1.5.1. Copyright (c) 2013 Matt Banks. Dual licensed under the MIT and GPL licenses. */
   !function(a){a.fn.equalHeights=function(){var b=0,c=a(this);return c.each(function(){var c=a(this).innerHeight();c>b&&(b=c)}),c.css("height",b)},a("[data-equal]").each(function(){var b=a(this),c=b.data("equal");b.find(c).equalHeights()})}(jQuery);
@@ -774,13 +774,28 @@
     var selectors = {
       body: 'body',
       cartSection: '#CartSection',
-      cartNoCookies: 'cart--no-cookies'
+      cartForm: 'form[action="/cart"]',
+      cartNoCookies: 'cart--no-cookies',
+      cartQuantity: '.cart__quantity-selector'
     };
 
     function Cart() {
       if (!cookiesEnabled()) {
         $(selectors.cartSection).addClass(selectors.cartNoCookies);
       }
+
+      /* Update cart page on blur of quantity input only if the quantity gets changed */
+      /*==========================*/ 
+      $(selectors.cartQuantity).on('focus', function(){
+        var $this = $(this);
+        var ogQty = $this.val();
+
+        $this.one('blur', function(event) {
+          if(ogQty != $this.val()){
+            $(selectors.cartForm).submit();  
+          }
+        });
+      });
     }
 
     function cookiesEnabled() {
@@ -826,9 +841,39 @@
   theme.HeroSection = (function() {
     function HeroSection(container) {
 
-      // Need to add some code here for window resize
+      this.selectors = {
+        slider: '.hero__background-slider',
+        slide:  '.hero__background-slide',
+        video:  '.hero__content-video',
+        videoJSON: '#hero-video-json',
+        newVideoTarget: '.hero__content-video > .video-wrapper'
+      }
 
-      var $slider = $('.hero__background-slider');
+      // Initialize video
+
+      var videosJSON;
+      var videosJSONKeys;
+      var i;
+      var playerHtml;
+      var videoToPlay
+
+      if($(this.selectors.videoJSON).length){
+        videosJSON = JSON.parse($(this.selectors.videoJSON).html());
+        videosJSONKeys = _.keys(videosJSON);
+        i = Math.floor(Math.random() * _.keys(videosJSON).length);
+
+        videoToPlay = videosJSON[ videosJSONKeys[i] ];
+
+        if(videoToPlay.video_id.length){
+          playerHtml = '<iframe src="//player.vimeo.com/video/' + videoToPlay.video_id + '?color=ec008c&byline=0&portrait=0&badge=0&title=0" frameborder="0" allowfullscreen></iframe>';
+          $(this.selectors.newVideoTarget).html(playerHtml);
+        }
+
+      }
+
+      // Initialize the slider
+      var $slider = $(this.selectors.slider);
+      var slideshow;
       var sliderArgs = {
         selector: ".hero__background-slides > .hero__background-slide",
         slideshowSpeed: $slider.data('speed') || 5000,
@@ -845,17 +890,42 @@
 
       if ($slider.length) {
 
-        if ($slider.find('.hero__slide').length === 1) {
+        if ($slider.find(this.selectors.slide).length === 1) {
           sliderArgs.slideshow = false;
           sliderArgs.slideshowSpeed = 0;
         }
 
-        $slider.flexslider(this.sliderArgs);
+        slideshow = $slider.flexslider(sliderArgs);
+      
+        $(window).on('resize', afterResize(function() {
+            $slider.data('flexslider').resize();
+          }, 250, 'resize-slideshow')
+        );
+
       }
+
     }
 
     return HeroSection;
   })();
+
+  theme.HeroSection.prototype = _.assignIn({}, theme.HeroSection.prototype, {
+    onUnload: function() {
+    },
+    onLoad: function(){
+      console.log(JSON.parse($(this.selectors.videoJSON).html()));
+    },
+    onBlockSelect: function(evt) {
+      // this.showVideo( $(evt.target) );
+      console.log(JSON.parse($(this.selectors.videoJSON).html()));
+    },
+    onBlockDeselect: function() {
+
+    },
+    showVideo: function($video){
+      
+    }
+  });
 
   theme.slideshows = {};
 
@@ -1016,6 +1086,137 @@
     return Footer;
   })();
 
+  theme.VideoPage = (function() {
+    function VideoPage() {
+
+      this.player;
+      this.selectors = {
+        videoItem: '.media-list__video[data-video-id]',
+        videoContainer: '.video-target',
+        videoCaption: '.video-caption[data-video-id]'
+      };
+
+      this.init();
+    }
+    
+    VideoPage.prototype = _.assignIn({}, VideoPage.prototype, {
+      init: function() {
+        
+        $(this.selectors.videoItem).on('click', this.onVideoItemClick.bind(this));
+
+        $(function(){
+          this.displayVideo( $(this.selectors.videoItem).first().data('video-id') );
+        }.bind(this));
+      },
+      _createPlayer: function(container, id){
+
+        var player;
+        var options = {
+          id       : id,
+          byline   : false,
+          portrait : false,
+          color    : 'ec008c'
+        };
+
+        player = new Vimeo.Player(container, options);
+
+        player.on('ended', this.onPlayerEnded.bind(this));
+
+        return player;
+      },
+      onPlayerEnded: function(e){},
+      onBlockSelect: function(e){
+        // var $block = $('#video-block--' + e.detail.blockId);
+        // var videoId = $block.data('video-id');
+
+        // console.log($block);
+      },
+      displayVideo: function(id){
+        
+        var self     = this;
+        var $item    = $('.media-list__video[data-video-id="' + id + '"]');
+        var $caption = $('.video-caption[data-video-id="' + id + '"]')
+
+        if(id && $item.length){
+          if(!this.player){
+            $(this.selectors.videoContainer).empty();
+            this.player = this._createPlayer($(this.selectors.videoContainer).get(0), id);
+          }
+          else {
+            // Auto play the video since this isn't the first video we're showing, they must have clicked on it
+            this.player.loadVideo(id).then(function(id) {
+              self.player.play();
+            });
+          }
+
+          // Update the dom to show which video we're playing
+          $(this.selectors.videoItem).removeClass('is-current');
+          $(this.selectors.videoCaption).removeClass('is-current');
+          $item.addClass('is-current');
+          $caption.addClass('is-current');
+        }
+
+      },
+      onVideoItemClick: function(e){
+
+        this.displayVideo( $(e.delegateTarget).data('video-id') );
+
+        return false;
+      }
+    });
+    
+    return VideoPage;
+  })();
+
+  theme.AnalogPage = (function() {
+    function AnalogPage() {
+
+      this.selectors = {
+        listItem: 'li[data-block-id]',
+        block:    '.analog-block[data-block-id]'
+      };
+
+      this.init();
+    }
+
+    AnalogPage.prototype = _.assignIn({}, AnalogPage.prototype, {
+      init: function() {
+        
+        $(this.selectors.listItem).on('click', this.onListItemClick.bind(this));
+
+        $(function(){
+          this.displayBlock( $(this.selectors.block).first().data('block-id') );
+        }.bind(this));
+      },
+      onListItemClick: function(e){
+        
+        this.displayBlock( $(e.delegateTarget).data('block-id') );
+
+        return false;
+      },
+      displayBlock: function(blockID){
+        if(typeof blockID == "undefined") return;
+
+        var $li    = $(this.selectors.listItem).filter('[data-block-id="'+ blockID +'"]');
+        var $block = $(this.selectors.block).filter('[data-block-id="'+ blockID +'"]');
+
+        // Load images for the block if there are any
+        if($block.find('img[data-src]').length){
+          $block.find('img[data-src]').each(function(index, el) {
+            var src = $(this).data('src');
+            $(this).attr('src', src).removeAttr('data-src');
+          });
+        }
+        
+        $(this.selectors.listItem).removeClass('is-current');
+        $(this.selectors.block).removeClass('is-current');
+        $li.addClass('is-current');
+        $block.addClass('is-current');
+      }
+    });
+
+    return AnalogPage;
+  })();
 
   $(document).ready(function() {
     var sections = new theme.Sections();
@@ -1032,6 +1233,8 @@
       sections.register('featured-products-section', theme.FeaturedProducts);
       sections.register('password-header', theme.PasswordHeader);
       sections.register('footer-section', theme.Footer);
+      sections.register('page-video', theme.VideoPage);
+      sections.register('page-analog', theme.AnalogPage);
   });
 
   theme.cacheSelectors = function () {
@@ -1051,6 +1254,7 @@
   theme.init = function () {
     theme.cacheSelectors();
     timber.cacheVariables();
+    theme.fixExternalLinks();
   };
 
   theme.equalHeights = function ($selector) {
@@ -1069,7 +1273,17 @@
     }
   };
 
+  // Open all external links in a new window
+  theme.fixExternalLinks = function(){
+    $('a').not('[href*="mailto:"]').each(function () {
+      var isInternalLink = new RegExp('/' + window.location.host + '/');
+      if ( !isInternalLink.test(this.href) ) {
+        $(this).attr('target', '_blank');
+      }
+    });
+  };
+
   // Initialize theme's JS on docready
   $(theme.init);
 
-})(jQuery, enquire, _, FastClick, imagesLoaded, respond);
+})(jQuery, enquire, _, FastClick, imagesLoaded, respond, Vimeo);

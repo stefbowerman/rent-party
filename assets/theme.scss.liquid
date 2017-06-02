@@ -255,22 +255,6 @@ $colorSecondary:          $gray-medium;
 $colorBrand:              #FFDD00;
 $colorBrandPink:          #ec008c;
 
-// Button colors
-$colorBtnPrimary:         $colorPrimary;
-$colorBtnPrimaryHover:    lighten($colorBtnPrimary, 10%);
-$colorBtnPrimaryActive:   darken($colorBtnPrimaryHover, 10%);
-$colorBtnPrimaryText:     $white;
-
-$colorBtnSecondary:       $colorSecondary;
-$colorBtnSecondaryHover:  lighten($colorBtnSecondary, 10%);
-$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
-$colorBtnSecondaryText:   $white;
-
-$colorBtnTertiary:        $white;
-$colorBtnTertiaryHover:   $colorPrimary;
-$colorBtnTertiaryActive:  darken($colorPrimary, 10%);
-$colorBtnTertiaryText:    $colorPrimary;
-
 // Text link colors
 $colorLink:               $colorPrimary;
 $colorLinkHover:          lighten($colorPrimary, 15%);
@@ -281,6 +265,23 @@ $colorTextBody:           $gray-dark;
 // Backgrounds
 $colorBody:               $white;
 $colorHeader:             transparent;
+
+// Button colors
+$colorBtnPrimary:         $colorPrimary;
+$colorBtnPrimaryHover:    lighten($colorBtnPrimary, 10%);
+$colorBtnPrimaryActive:   darken($colorBtnPrimaryHover, 10%);
+$colorBtnPrimaryText:     $white;
+
+$colorBtnSecondary:       $colorBody; // $colorSecondary;
+$colorBtnSecondaryHover:  darken($colorBtnSecondary, 6%);
+$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
+$colorBtnSecondaryText:   $colorTextBody;
+$colorBtnSecondaryBorder: $colorBtnSecondaryText;
+
+$colorBtnTertiary:        $white;
+$colorBtnTertiaryHover:   $colorPrimary;
+$colorBtnTertiaryActive:  darken($colorPrimary, 10%);
+$colorBtnTertiaryText:    $colorPrimary;
 
 // Background images
 $passwordBgImage:         '{{ 'password-page-background.jpg' | asset_url }}';
@@ -1206,7 +1207,7 @@ $responsive:         true;
 $mobile-first:       true;
 $use-silent-classes: false;
 $push:               true;
-$pull:               false;
+$pull:               true;
 
 /* Force clearfix on grids */
 .grid,
@@ -2090,6 +2091,7 @@ input.btn--secondary {
   @extend .btn;
   background-color: $colorBtnSecondary;
   color: $colorBtnSecondaryText;
+  border-color: $colorBtnSecondaryBorder;
 
   &:hover {
     background-color: $colorBtnSecondaryHover;
@@ -2454,7 +2456,7 @@ select.btn--tertiary {
   position: absolute;
   z-index: $zindex-header;
   width: 100%;
-  padding: $gutter 0;
+  padding: $gutter 0 ($gutter * 2/3);
   background-color: $colorHeader;
 }
 
@@ -2469,8 +2471,45 @@ select.btn--tertiary {
   display: block;
   margin: 0 auto;
 }
+
+.site-header__logo-link {
+  @include transform(scale(1));
+  @include transition(transform 250ms cubic-bezier(0.46, -0.53, 0.42, 1.04));
+
+  &:hover,
+  &:focus {
+    @include transform(scale(1.05));
+    @include transition(transform 200ms cubic-bezier(0, 0, 0.09, 1.78));
+  }
+}
+
 .site-header__logo-img {
   max-width: 72px;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1, 1);
+}
+
+// TODO - Fix all this
+.site-header__cart {
+  position: absolute;
+  z-index: 100;
+  top: 43px;
+  right: $gutter / 2;
+  padding: 10px 0;
+  font-size: 1.2em;
+  min-width: 65px;
+  text-align: right;
+  span {
+    display: inline-block;
+    position: relative;
+    top: 1px;
+  }
+  @include at-query($min, $large) {
+    position: static;
+    float: right;
+    margin-top: 15px;
+    margin-right: 26px;
+  }
 }
 // if settings.product_image_zoom_type == 'lightbox' 
   /*================ Module | Product Lightbox ================*/
@@ -3187,16 +3226,24 @@ aside time em {
 }
 
 /*================ Templates | Cart Page ================*/
-.template-cart .main-content .wrapper {
-  max-width: $large;
+
+$cartButtonMinWidth: 220px;
+
+.template-cart {
+  .main-content .wrapper {
+    max-width: $large;
+  }
+  .section-header__title {
+    opacity: 0;
+  }
 }
 
 .cart__row {
   position: relative;
-  padding-top: ($gutter * 2/3);
+  padding-top: 18px;
 
   & + & {
-    margin-top: ($gutter * 2/3);
+    margin-top: 18px;
     border-top: 1px solid $colorBorder;
   }
 
@@ -3231,9 +3278,29 @@ aside time em {
 .cart__image {
   display: block;
 
-  img {
-    max-height: 110px;
-    display: block;
+  @include at-query ($min, $large) {
+    img {
+      max-height: 105px;
+      display: block;
+    }
+  }
+}
+
+.cart__item-essential {
+  position: relative;
+}
+
+.cart__item-mini-price {
+  float: right;
+  padding-left: 20px;
+  @include at-query ($min, $large) {
+    display: none;
+  }
+}
+
+.cart__mini-quantity {
+  @include at-query ($min, $large) {
+    display: none;
   }
 }
 
@@ -3245,16 +3312,6 @@ aside time em {
 .cart-additional-savings__price {
   margin: 0 0 0 ($gutter / 3);
   display: inline;
-}
-
-.cart__mini-labels {
-  display: block;
-  margin: ($gutter / 3) 0;
-  font-size: em(12px);
-
-  @include at-query ($min, $large) {
-    display: none;
-  }
 }
 
 input.cart__quantity-selector {
@@ -3275,18 +3332,6 @@ input.cart__quantity-selector {
   display: block;
 }
 
-.cart__note-add.is-hidden {
-  display: none;
-}
-
-.cart__note {
-  display: none;
-
-  &.is-active {
-    display: block;
-  }
-}
-
 .cart-item__discount,
 .cart-additional-savings__savings,
 .cart-subtotal__savings {
@@ -3294,10 +3339,60 @@ input.cart__quantity-selector {
 }
 
 .cart .btn {
-  margin-bottom: 4px;
+  margin-bottom: $gutter / 2;
+  min-width: $cartButtonMinWidth;
+  @include at-query ($max, $large) {
+    width: 100%;
+  }
 }
 
-.cart__additional_checkout {
+.cart__alternate-buttons {
+  @include at-query ($min, $large) {
+    float: left;
+  }
+}
+
+// Hide the update button since we update the cart on input blur via JS
+.supports-js .update-cart {
+  display: none;
+}
+
+.btn-checkout {
+  margin-bottom: 0;
+}
+
+.cart__additional-checkout-separator {
+  position: relative;
+  margin: $gutter 0;
+  text-transform: uppercase;
+  text-align: center;
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background-color: $colorBorder;
+  }
+
+  span {
+    padding: 0 10px;
+    background-color: $colorBody;
+    position: relative;
+    z-index: 1;
+  }
+
+  @include at-query ($min, $large) {
+    text-align: right;
+    
+    span {
+      padding-right: 0;
+    }
+  }
+}
+
+.cart__additional-checkout {
   margin: ($gutter / 2) 0 0;
 
   input {
@@ -3315,6 +3410,21 @@ input.cart__quantity-selector {
     }
   }
 
+  .additional-checkout-button {
+    border-radius: $radius !important;
+    width: 100%;
+    min-width: $cartButtonMinWidth !important;
+    margin-bottom: $gutter / 2;
+    @include at-query ($min, $large) {
+      width: auto;
+    }
+
+    @include at-query ($max, $large) {
+      & + & {
+        margin-left: 0;
+      }
+    }
+  }
 }
 
 .cart__continue-btn {
@@ -3324,6 +3434,8 @@ input.cart__quantity-selector {
 }
 
 .cart--empty-message {
+  text-align: center;
+  font-size: $fontSizeLarge;
   .cart--no-cookies & {
     display: none;
   }
@@ -3336,6 +3448,7 @@ input.cart__quantity-selector {
     display: block;
   }
 }
+
 .index-section {
   padding-top: $section-spacing-small / 2;
   padding-bottom: $section-spacing-small / 2;
@@ -3361,8 +3474,13 @@ input.cart__quantity-selector {
   position:relative;
   padding: 120px 0 30px;
   @include at-query($min, $large){
-    height: 100vh;
-    min-height: 500px;
+    height: 83vh;
+    // min-height: 600px;
+    max-height: 550px;
+  }
+  @include at-query($min, $wide){
+    min-height: 600px; // 550px;
+    max-height: 620px;
   }
 }
 
@@ -3403,70 +3521,65 @@ input.cart__quantity-selector {
   @include justify-content(center);
 }
 
-.hero__strip-container {
-  position: relative;
-  padding: 40px 0;
-}
-
-.hero__strips {
-
-  margin-bottom: 40px;
-  @include clearfix;
-  @include at-query($min, $large){
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-}
-
-.hero__strip {
-  float: left;
-
-  @for $i from 1 through 5 {
-    .hero__strips--count-#{$i} & { 
-      width: percentage(1/$i)
-    }
-  }
-}
-
-.hero__strip-inner {
-  min-height: 360px;
-  background: {
-    size: cover;
-    position: center;
-  }
-
-  @include at-query($min, $large){
-    margin: 0 10px;
-  }
-}
-
-.hero__menu {
-  @extend .inline-list;
-  margin: 0;
-  font-weight: bold;
+.hero__content-video {
   text-align: center;
-
-  li {
-    margin: 0 2px;
-    padding: 0 2px;
-
-    &:not(:last-child) {
-      &:after {
-        content: "|";
-        position: relative;
-        right: -4px;
-      }
+  @include at-query($min, $large){
+    margin-top: -7%;
+  }
+}
+[data-section-type="page-analog"] {
+  .media-list {
+    @include at-query($max, $large){
+      margin-top: $gutter;
+      padding-top: $gutter;
+      border-top: 1px solid $colorTextBody;
+    }
+  }
+  li[data-block-id] {
+    position: relative;
+    margin-bottom: 12px;
+    padding-left: 0;
+    transition: padding-left 300ms ease-in-out 150ms;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid $colorTextBody;
+      opacity: 0;
+      transition: all 300ms ease-in-out;
     }
 
-    a {
-      padding: 8px 9px 6px;
-      transition: all 150ms ease-in;
-      &:hover,
-      &:focus {
-        color: white;
-        background-color: $colorBrandPink;
-        transition: all 150ms ease-out;
+    &.is-current {
+      padding-left: 15px;
+      transition: padding-left 300ms ease-in-out;
+
+      &:before {
+        opacity: 1;
+        transition: all 300ms ease-in-out 150ms;
       }
+    }
+  }
+}
+
+.supports-js {
+  [data-section-type="page-analog"] {
+    li[data-block-id] {
+      &:not(.is-current) {
+        cursor: pointer;
+      }
+    }
+  }
+  .analog-block {
+    display: none;
+    text-align: center;
+
+    &.is-current {
+      display: block;
     }
   }
 }
@@ -3724,11 +3837,70 @@ input[type="submit"].password-page__signup-form__submit {
   }
 }
 
+.media-list {
+  @include at-query($max, $large){
+    margin-top: $gutter;
+    padding-top: $gutter;
+    border-top: 1px solid $colorTextBody;
+  }
+}
+
+.media-list__video {
+  position: relative;
+  cursor: pointer;
+  padding-left: 0;
+  margin-bottom: 12px;
+  transition: padding-left 300ms ease-in-out 150ms;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid $colorTextBody;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+  }
+
+  &.is-current {
+    cursor: auto;
+
+    padding-left: 15px;
+    transition: padding-left 300ms ease-in-out;
+
+    &:before {
+      opacity: 1;
+      transition: all 300ms ease-in-out 150ms;
+    }
+  }
+}
+
+.video-content {
+
+}
+
+.supports-js {
+  .video-caption {
+    display: none;
+    margin-top: $gutter;
+    text-align: center;
+
+    &.is-current {
+      display: block;
+    }
+  }
+}
 /*================ Templates | Product Page ================*/
+
+/* Only show default variant drop-down when JavaScript is *not* enabled */
 .product-single__variants {
   display: none;
 
-  .no-js & {
+  .supports-no-js & {
     display: block;
   }
 }
@@ -4438,7 +4610,7 @@ img.mfp-img {
   margin-top: 150px; // clear space for absolutely positioned header
   padding-bottom: $gutter * 2;
   @include at-query ($min, $large) {
-    margin-top: 120px;
+    margin-top: 122px;
   }
   .template-index & {
      margin-top: 0;
@@ -4699,7 +4871,7 @@ html[xmlns] .slides { display: block; }
 * html .slides { height: 1%; }
 
 /*================ No JS Fallback ================*/
-.no-js .slides > li:first-child { display: block; }
+.supports-no-js .slides > li:first-child { display: block; }
 .flexslider { position: relative; zoom: 1; }
 .flex-viewport { max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease; }
 .loading .flex-viewport { max-height: 300px; }

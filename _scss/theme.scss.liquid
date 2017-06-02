@@ -40,7 +40,7 @@
   margin-top: 150px; // clear space for absolutely positioned header
   padding-bottom: $gutter * 2;
   @include at-query ($min, $large) {
-    margin-top: 120px;
+    margin-top: 122px;
   }
   .template-index & {
      margin-top: 0;
@@ -301,7 +301,7 @@ html[xmlns] .slides { display: block; }
 * html .slides { height: 1%; }
 
 /*================ No JS Fallback ================*/
-.no-js .slides > li:first-child { display: block; }
+.supports-no-js .slides > li:first-child { display: block; }
 .flexslider { position: relative; zoom: 1; }
 .flex-viewport { max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease; }
 .loading .flex-viewport { max-height: 300px; }

@@ -50,22 +50,6 @@ $colorSecondary:          $gray-medium;
 $colorBrand:              #FFDD00;
 $colorBrandPink:          #ec008c;
 
-// Button colors
-$colorBtnPrimary:         $colorPrimary;
-$colorBtnPrimaryHover:    lighten($colorBtnPrimary, 10%);
-$colorBtnPrimaryActive:   darken($colorBtnPrimaryHover, 10%);
-$colorBtnPrimaryText:     $white;
-
-$colorBtnSecondary:       $colorSecondary;
-$colorBtnSecondaryHover:  lighten($colorBtnSecondary, 10%);
-$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
-$colorBtnSecondaryText:   $white;
-
-$colorBtnTertiary:        $white;
-$colorBtnTertiaryHover:   $colorPrimary;
-$colorBtnTertiaryActive:  darken($colorPrimary, 10%);
-$colorBtnTertiaryText:    $colorPrimary;
-
 // Text link colors
 $colorLink:               $colorPrimary;
 $colorLinkHover:          lighten($colorPrimary, 15%);
@@ -76,6 +60,23 @@ $colorTextBody:           $gray-dark;
 // Backgrounds
 $colorBody:               $white;
 $colorHeader:             transparent;
+
+// Button colors
+$colorBtnPrimary:         $colorPrimary;
+$colorBtnPrimaryHover:    lighten($colorBtnPrimary, 10%);
+$colorBtnPrimaryActive:   darken($colorBtnPrimaryHover, 10%);
+$colorBtnPrimaryText:     $white;
+
+$colorBtnSecondary:       $colorBody; // $colorSecondary;
+$colorBtnSecondaryHover:  darken($colorBtnSecondary, 6%);
+$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
+$colorBtnSecondaryText:   $colorTextBody;
+$colorBtnSecondaryBorder: $colorBtnSecondaryText;
+
+$colorBtnTertiary:        $white;
+$colorBtnTertiaryHover:   $colorPrimary;
+$colorBtnTertiaryActive:  darken($colorPrimary, 10%);
+$colorBtnTertiaryText:    $colorPrimary;
 
 // Background images
 $passwordBgImage:         '{{ 'password-page-background.jpg' | asset_url }}';

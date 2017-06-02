@@ -1,14 +1,22 @@
 /*================ Templates | Cart Page ================*/
-.template-cart .main-content .wrapper {
-  max-width: $large;
+
+$cartButtonMinWidth: 220px;
+
+.template-cart {
+  .main-content .wrapper {
+    max-width: $large;
+  }
+  .section-header__title {
+    opacity: 0;
+  }
 }
 
 .cart__row {
   position: relative;
-  padding-top: ($gutter * 2/3);
+  padding-top: 18px;
 
   & + & {
-    margin-top: ($gutter * 2/3);
+    margin-top: 18px;
     border-top: 1px solid $colorBorder;
   }
 
@@ -43,9 +51,29 @@
 .cart__image {
   display: block;
 
-  img {
-    max-height: 110px;
-    display: block;
+  @include at-query ($min, $large) {
+    img {
+      max-height: 105px;
+      display: block;
+    }
+  }
+}
+
+.cart__item-essential {
+  position: relative;
+}
+
+.cart__item-mini-price {
+  float: right;
+  padding-left: 20px;
+  @include at-query ($min, $large) {
+    display: none;
+  }
+}
+
+.cart__mini-quantity {
+  @include at-query ($min, $large) {
+    display: none;
   }
 }
 
@@ -57,16 +85,6 @@
 .cart-additional-savings__price {
   margin: 0 0 0 ($gutter / 3);
   display: inline;
-}
-
-.cart__mini-labels {
-  display: block;
-  margin: ($gutter / 3) 0;
-  font-size: em(12px);
-
-  @include at-query ($min, $large) {
-    display: none;
-  }
 }
 
 input.cart__quantity-selector {
@@ -87,18 +105,6 @@ input.cart__quantity-selector {
   display: block;
 }
 
-.cart__note-add.is-hidden {
-  display: none;
-}
-
-.cart__note {
-  display: none;
-
-  &.is-active {
-    display: block;
-  }
-}
-
 .cart-item__discount,
 .cart-additional-savings__savings,
 .cart-subtotal__savings {
@@ -106,10 +112,60 @@ input.cart__quantity-selector {
 }
 
 .cart .btn {
-  margin-bottom: 4px;
+  margin-bottom: $gutter / 2;
+  min-width: $cartButtonMinWidth;
+  @include at-query ($max, $large) {
+    width: 100%;
+  }
 }
 
-.cart__additional_checkout {
+.cart__alternate-buttons {
+  @include at-query ($min, $large) {
+    float: left;
+  }
+}
+
+// Hide the update button since we update the cart on input blur via JS
+.supports-js .update-cart {
+  display: none;
+}
+
+.btn-checkout {
+  margin-bottom: 0;
+}
+
+.cart__additional-checkout-separator {
+  position: relative;
+  margin: $gutter 0;
+  text-transform: uppercase;
+  text-align: center;
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background-color: $colorBorder;
+  }
+
+  span {
+    padding: 0 10px;
+    background-color: $colorBody;
+    position: relative;
+    z-index: 1;
+  }
+
+  @include at-query ($min, $large) {
+    text-align: right;
+    
+    span {
+      padding-right: 0;
+    }
+  }
+}
+
+.cart__additional-checkout {
   margin: ($gutter / 2) 0 0;
 
   input {
@@ -127,6 +183,21 @@ input.cart__quantity-selector {
     }
   }
 
+  .additional-checkout-button {
+    border-radius: $radius !important;
+    width: 100%;
+    min-width: $cartButtonMinWidth !important;
+    margin-bottom: $gutter / 2;
+    @include at-query ($min, $large) {
+      width: auto;
+    }
+
+    @include at-query ($max, $large) {
+      & + & {
+        margin-left: 0;
+      }
+    }
+  }
 }
 
 .cart__continue-btn {
@@ -136,6 +207,8 @@ input.cart__quantity-selector {
 }
 
 .cart--empty-message {
+  text-align: center;
+  font-size: $fontSizeLarge;
   .cart--no-cookies & {
     display: none;
   }

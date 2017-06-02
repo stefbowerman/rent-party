@@ -23,8 +23,13 @@
   position:relative;
   padding: 120px 0 30px;
   @include at-query($min, $large){
-    height: 100vh;
-    min-height: 500px;
+    height: 83vh;
+    // min-height: 600px;
+    max-height: 550px;
+  }
+  @include at-query($min, $wide){
+    min-height: 600px; // 550px;
+    max-height: 620px;
   }
 }
 
@@ -65,70 +70,9 @@
   @include justify-content(center);
 }
 
-.hero__strip-container {
-  position: relative;
-  padding: 40px 0;
-}
-
-.hero__strips {
-
-  margin-bottom: 40px;
-  @include clearfix;
-  @include at-query($min, $large){
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-}
-
-.hero__strip {
-  float: left;
-
-  @for $i from 1 through 5 {
-    .hero__strips--count-#{$i} & { 
-      width: percentage(1/$i)
-    }
-  }
-}
-
-.hero__strip-inner {
-  min-height: 360px;
-  background: {
-    size: cover;
-    position: center;
-  }
-
-  @include at-query($min, $large){
-    margin: 0 10px;
-  }
-}
-
-.hero__menu {
-  @extend .inline-list;
-  margin: 0;
-  font-weight: bold;
+.hero__content-video {
   text-align: center;
-
-  li {
-    margin: 0 2px;
-    padding: 0 2px;
-
-    &:not(:last-child) {
-      &:after {
-        content: "|";
-        position: relative;
-        right: -4px;
-      }
-    }
-
-    a {
-      padding: 8px 9px 6px;
-      transition: all 150ms ease-in;
-      &:hover,
-      &:focus {
-        color: white;
-        background-color: $colorBrandPink;
-        transition: all 150ms ease-out;
-      }
-    }
+  @include at-query($min, $large){
+    margin-top: -7%;
   }
 }

@@ -1,8 +1,10 @@
 /*================ Templates | Product Page ================*/
+
+/* Only show default variant drop-down when JavaScript is *not* enabled */
 .product-single__variants {
   display: none;
 
-  .no-js & {
+  .supports-no-js & {
     display: block;
   }
 }

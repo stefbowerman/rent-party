@@ -59,6 +59,7 @@ input.btn--secondary {
   @extend .btn;
   background-color: $colorBtnSecondary;
   color: $colorBtnSecondaryText;
+  border-color: $colorBtnSecondaryBorder;
 
   &:hover {
     background-color: $colorBtnSecondaryHover;

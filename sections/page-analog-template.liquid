@@ -1,0 +1,77 @@
+<div data-section-id="{{ section.id }}" data-section-type="page-analog">
+ 
+  <div class="grid">
+
+    {% if section.blocks.size == 0 %}
+      <div class="grid__item text-center">
+        Add some content to this page
+      </div>
+    {% else %}
+      {% comment %} Main content {% endcomment %}
+      <div class="grid__item post-large--three-quarters push--post-large--one-quarter">
+        {% for block in section.blocks %}
+          <div class="analog-block" data-block-id="{{ block.id }}">
+            {% if block.settings.image %}
+              <img data-src="{{ block.settings.image | img_url: '800x' }}" style="max-width: 100%; margin-bottom: 20px;" />
+            {% endif %}
+            <h4>{{ block.settings.title }}</h4>
+            {% if block.settings.description %}
+              <p>{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% comment %} Sidebar should go second in the DOM {% endcomment %}
+      <div class="grid__item post-large--one-quarter pull--post-large--three-quarters">
+
+        {% if page.content.size > 0 %}
+          <div class="rte" style="margin-bottom: 30px;">
+            {{ page.content }}
+          </div>
+        {% endif %}
+
+        <ul class="media-list">
+          {% for block in section.blocks %}
+            <li data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+              <span class="h5">{{ block.settings.title }}</span>
+            </li>
+          {% endfor %}          
+        </ul>
+      </div>
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Analog page",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "content",
+        "name": "Content",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

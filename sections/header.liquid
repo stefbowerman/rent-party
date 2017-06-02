@@ -7,7 +7,7 @@
       {% else %}
         <div class="h1 site-header__logo post-large--right" itemscope itemtype="http://schema.org/Organization">
       {% endif %}
-        <a href="/" class="site-header__logo-link" itemprop="url">
+        <a href="/" class="site-header__logo-link" itemprop="url" title="{{ shop.name }}">
           <img src="{{ section.settings.logo | img_url: '100x' }}" class="site-header__logo-img" alt="{{ shop.name }}" itemprop="logo">
         </a>
       {% if template.name == 'index' %}
@@ -15,6 +15,10 @@
       {% else %}
         </div>
       {% endif %}
+
+      <a href="/cart" class="site-header__cart">
+        <span class="icon icon-cart" aria-hidden="true"></span> Cart
+      </a>
 
     </div>
   </header>
