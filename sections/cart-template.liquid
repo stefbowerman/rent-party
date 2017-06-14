@@ -11,6 +11,10 @@
 
   {% if cart.item_count > 0 %}
 
+    {% if section.settings.cart_top_message != blank %}
+      <div class="cart__top-message">{{ section.settings.cart_top_message }}</div>
+    {% endif %}
+
     <form action="/cart" method="post" novalidate class="cart">
 
       {% comment %}
@@ -189,6 +193,12 @@
   {
     "name": "Cart page",
     "settings": [
+      {
+        "type": "textarea",
+        "id": "cart_top_message",
+        "label": "Cart top message",
+        "info": "Displays above a non-empty cart"
+      },
       {
         "type": "textarea",
         "id": "cart_info_message",

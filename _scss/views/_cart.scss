@@ -11,6 +11,12 @@ $cartButtonMinWidth: 220px;
   }
 }
 
+.cart__top-message {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: $gutter * 1.5;
+}
+
 .cart__row {
   position: relative;
   padding-top: 18px;
