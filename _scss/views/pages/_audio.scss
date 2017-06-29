@@ -1,0 +1,6 @@
+.audio-block {
+  &:not(:last-child) {
+    margin-bottom: $gutter;
+    padding-bottom: $gutter;
+  }
+}
